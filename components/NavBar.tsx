@@ -21,15 +21,13 @@ const NavBar = () => {
     return null;
   }
 
-  const logoPath = `/logos/${theme === "light" ? "LogoLight" : "LogoDark"}.png`;
-
   return (
     <div className="flex h-24 w-full justify-between items-center px-4">
       <div className="flex items-center gap-4">
         <Link href={"/"}>
           <div className="flex items-center gap-2">
             <Image
-              src={logoPath}
+              src={`/logos/${theme === "light" ? "LogoLight" : "LogoDark"}.png`}
               alt="Cartomania logo"
               width={40}
               height={40}
