@@ -6,13 +6,14 @@ import { Button } from "./ui/button";
 import ProfilePopover from "./ProfilePopover";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+import { LoaderIcon } from "lucide-react";
 
 const NavBar = () => {
-  const user = useSession().data?.user;
+  const { status, data } = useSession();
+  const user = data?.user;
   const pathname = usePathname();
 
-  // Hide the NavBar on login page
+  // Hide the NavBar on login & logout pages
   if (pathname.startsWith("/login") || pathname.startsWith("/logout")) {
     return null;
   }
@@ -26,23 +27,17 @@ const NavBar = () => {
       </div>
       <div className="flex items-center gap-4">
         <ThemeSwitcher />
-        {user ? (
-          // <ProfilePopover />
-          <div className="flex flex-col items-center">
-            {user.image && (
-              <Image
-                src={user.image}
-                alt="profile-pic"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            )}
-            {user.name}
-          </div>
+        {status !== "loading" ? (
+          user ? (
+            <ProfilePopover />
+          ) : (
+            <Button asChild>
+              <Link href={"/login"}>Login</Link>
+            </Button>
+          )
         ) : (
-          <Button asChild>
-            <Link href={"/login"}>Login</Link>
+          <Button variant="secondary">
+            <LoaderIcon className="h-4 w-4 animate-spin" />
           </Button>
         )}
       </div>
