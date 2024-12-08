@@ -9,7 +9,6 @@ const COOKIE_EXPIRES = 12; // 12 hours
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
 };
 
 type ThemeProviderState = {
@@ -24,24 +23,16 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({
-  children,
-  defaultTheme = "light",
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      const cookieTheme = Cookies.get(COOKIE_KEY) as Theme;
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [theme, setTheme] = useState<Theme>(isDark ? "dark" : "light");
 
-      if (cookieTheme) return cookieTheme;
-
-      // If no cookie is set, use the system theme
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+  useEffect(() => {
+    const cookieTheme = Cookies.get(COOKIE_KEY) as Theme | undefined;
+    if (cookieTheme) {
+      setTheme(cookieTheme);
     }
-    return defaultTheme;
-  });
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
