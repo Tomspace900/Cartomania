@@ -4,15 +4,19 @@ import countries from "@/ressources/countries.json";
 import { Country, Region, Subregion } from "./types";
 
 export function getCountries(): Country[] {
-  return countries as Country[];
+  return countries as unknown as Country[];
 }
 
 export function getUNMembersCountries(): Country[] {
-  return countries.filter((country) => country.UNMember as Country);
+  return countries.filter(
+    (country) => country.UNMember,
+  ) as unknown as Country[];
 }
 
 export function getCountryByCode(code: string): Country {
-  return countries.find((country) => country.cca2 === code);
+  return countries.find(
+    (country) => country.cca2 === code,
+  ) as unknown as Country;
 }
 
 export function getRegions(): Region[] {

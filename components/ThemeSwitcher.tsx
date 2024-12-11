@@ -4,9 +4,10 @@ import { useTheme } from "@/contexts/ThemeProvider";
 import { Switch } from "./ui/switch";
 
 const ThemeSwitcher = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
-  const handleThemeChange = () => setTheme(theme === "dark" ? "light" : "dark");
+  const handleThemeChange = () =>
+    toggleTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <Switch

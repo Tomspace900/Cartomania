@@ -9,52 +9,61 @@ const COOKIE_EXPIRES = 12; // 12 hours
 
 type ThemeProviderProps = {
   children: React.ReactNode;
+  defaultTheme: Theme;
 };
 
 type ThemeProviderState = {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  toggleTheme: (theme: Theme) => void;
 };
 
 const initialState: ThemeProviderState = {
   theme: "light",
-  setTheme: () => null,
+  toggleTheme: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const [theme, setTheme] = useState<Theme>(isDark ? "dark" : "light");
+export function ThemeProvider({
+  defaultTheme,
+  children,
+  ...props
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const cookieTheme = Cookies.get(COOKIE_KEY) as Theme | undefined;
-    if (cookieTheme) {
-      setTheme(cookieTheme);
+    if (cookieTheme) handleSetTheme(cookieTheme);
+    else {
+      const systemTheme = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+
+      handleSetTheme(systemTheme ? "dark" : "light");
     }
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const root = window.document.documentElement;
+  const handleSetTheme = (theme: Theme) => {
+    setTheme(theme);
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+  };
 
-      root.classList.remove("light", "dark");
-      root.classList.add(theme);
-    }
-  }, [theme]);
-
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      Cookies.set(COOKIE_KEY, theme, { expires: COOKIE_EXPIRES / 24 }); // Convert to days
-      setTheme(theme);
-    },
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    handleSetTheme(newTheme);
+    Cookies.set(COOKIE_KEY, newTheme, { expires: COOKIE_EXPIRES / 24 }); // Convert to days
   };
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
-      {children}
-    </ThemeProviderContext.Provider>
+    mounted && (
+      <ThemeProviderContext.Provider {...props} value={{ theme, toggleTheme }}>
+        {children}
+      </ThemeProviderContext.Provider>
+    )
   );
 }
 

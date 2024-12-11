@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="light">
           <SessionProvider>
             <div className="flex justify-center w-full">
               <div className="flex flex-col items-center w-full max-w-6xl gap-8 min-h-screen">
