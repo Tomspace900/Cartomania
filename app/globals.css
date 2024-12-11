@@ -43,6 +43,45 @@
   opacity: 50%;
 }
 
+@keyframes successBounce {
+  0%,
+  80% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(-5px);
+  }
+
+  40% {
+    transform: translateY(5px);
+  }
+
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+.success-bounce {
+  animation: successBounce 0.5s;
+}
+
+.success-green {
+  position: relative;
+}
+
+.success-green::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background-color: hsl(var(--success));
+  opacity: 60%;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
