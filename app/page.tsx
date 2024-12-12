@@ -1,40 +1,42 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-// import countries from "@/ressources/countries.json";
-import Image from "next/image";
-import { ChangeEvent, useState } from "react";
-
-const API_URL = process.env.NEXT_PUBLIC_FLAGCDN_BASE_URL;
+import { Button } from "@/components/ui/button";
+import { getURLFromRegion } from "@/lib/utils";
+import { getRegions, getSubregions } from "@/ressources/getCountries";
+import Link from "next/link";
 
 export default function Home() {
-  const [selectedCountry, setSelectedCountry] = useState("");
-
-  const handleCountryChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toUpperCase();
-    if (value.length <= 2) setSelectedCountry(value);
-  };
+  const regions = getRegions();
+  const subregions = getSubregions();
 
   return (
-    <>
-      <Input
-        type="text"
-        value={selectedCountry}
-        onChange={handleCountryChange}
-        maxLength={2}
-        placeholder="Enter country code (2 letters)"
-        className="border p-2 rounded"
-      />
-
-      {selectedCountry.length === 2 && (
-        <Image
-          src={`${API_URL}/${selectedCountry.toLowerCase()}.svg`}
-          alt={`${selectedCountry}_flag`}
-          width={120}
-          height={90}
-          className="rounded-md"
-        />
-      )}
-    </>
+    <div className="sm:px-12 px-6 max-w-5xl flex flex-col w-full items-center gap-10">
+      <h1 className="text-2xl">Choose a region...</h1>
+      <div className="flex gap-2 flex-wrap justify-center">
+        {regions.map((region) => (
+          <Button
+            key={region}
+            asChild
+            className="hover:scale-[1.02] transition-transform duration-100 ease-in-out"
+          >
+            <Link href={`/game/${getURLFromRegion(region)}`}>{region}</Link>
+          </Button>
+        ))}
+      </div>
+      <h1 className="text-2xl">...or a subregion</h1>
+      <div className="flex gap-2 flex-wrap justify-center">
+        {subregions.map((subregion) => (
+          <Button
+            key={subregion}
+            asChild
+            className="hover:scale-[1.02] transition-transform duration-100 ease-in-out"
+          >
+            <Link href={`/game/${getURLFromRegion(subregion)}`}>
+              {subregion}
+            </Link>
+          </Button>
+        ))}
+      </div>
+    </div>
   );
 }

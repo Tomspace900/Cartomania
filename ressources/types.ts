@@ -8,9 +8,9 @@ export interface Country {
     };
   };
   tld: string[];
-  cca2: CountryCode;
+  cca2: string;
   ccn3: string;
-  cca3: string;
+  cca3: CountryCode;
   currency: string[];
   callingCode: string[];
   capital: string;
@@ -28,8 +28,8 @@ export interface Country {
   UNMember: boolean;
 }
 
-type CountryCode = string;
-type LanguageCode = string;
+export type CountryCode = string;
+export type LanguageCode = string;
 
 export type Region = "Africa" | "Americas" | "Asia" | "Europe" | "Oceania" | "";
 

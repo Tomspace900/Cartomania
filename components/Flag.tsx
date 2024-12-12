@@ -22,6 +22,8 @@ export const Flag = ({ country, onClick, isLazy }: FlagProps) => {
     setTimeout(() => setStatus("idle"), 500);
   };
 
+  const src = `${API_URL}/w320/${country.cca2.toLowerCase()}.webp`;
+
   return (
     <div
       className={`rounded-md cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out ${
@@ -34,8 +36,8 @@ export const Flag = ({ country, onClick, isLazy }: FlagProps) => {
     >
       <Image
         onClick={handleClick}
-        src={`${API_URL}/w320/${country.cca2.toLowerCase()}.webp`}
-        alt={`${country.cca2}_flag`}
+        src={src}
+        alt={`${country.cca3}_flag`}
         width={130}
         height={90}
         className="rounded-md shadow-md h-auto"

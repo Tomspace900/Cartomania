@@ -7,9 +7,10 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Country, Region } from "@/ressources/types";
+import { Country, Region, Subregion } from "@/ressources/types";
 import _, { sample } from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
+import { useTimer } from "@/hooks/use-timer";
 
 export type IGameLoadingState = "idle" | "loading" | "playing" | "win" | "lose";
 
@@ -20,8 +21,13 @@ interface IGameContext {
   questionStatus: QuestionStatus;
   gameCountries: Country[];
   askedCountry?: Country;
+  timer: number;
   setGameState: (state: IGameLoadingState) => void;
-  initGameState: (region?: Region, UNMembers?: boolean) => void;
+  initGameState: (
+    region?: Region,
+    subregion?: Subregion,
+    UNMembers?: boolean,
+  ) => void;
   handleClickedCountry: (country: Country) => QuestionStatus;
   getRandomCountry: (countries: Country[]) => Country;
 }
@@ -31,6 +37,7 @@ const initialState: IGameContext = {
   questionStatus: "idle",
   gameCountries: [],
   askedCountry: undefined,
+  timer: 0,
   setGameState: () => {},
   initGameState: () => {},
   handleClickedCountry: () => "idle",
@@ -49,18 +56,25 @@ export function GameProvider({
   const [gameCountries, setGameCountries] = useState<Country[]>([]);
   const [askedCountry, setAskedCountry] = useState<Country>();
   const [questionStatus, setQuestionStatus] = useState<QuestionStatus>("idle");
+  const { timer, startTimer, stopTimer } = useTimer();
 
   const getRandomCountry = useCallback((countries: Country[]): Country => {
     return sample(countries) as Country;
   }, []);
 
-  const initGameState = (region?: Region, UNMembers?: boolean) => {
+  const initGameState = (
+    region?: Region,
+    subregion?: Subregion,
+    UNMembers?: boolean,
+  ) => {
     setGameState("loading");
     const countries = UNMembers ? getUNMembersCountries() : getCountries();
 
     const filteredCountries = region
       ? countries.filter((country) => country.region === region)
-      : countries;
+      : subregion
+        ? countries.filter((country) => country.subregion === subregion)
+        : countries;
 
     const shuffledCountries = _.shuffle(filteredCountries);
     const shuffledGameCountries = shuffledCountries.map((country) => ({
@@ -72,14 +86,15 @@ export function GameProvider({
     setGameCountries(shuffledGameCountries);
     setAskedCountry(getRandomCountry(shuffledGameCountries));
     setGameState("playing");
+    startTimer();
   };
 
   const handleClickedCountry = (country: Country): QuestionStatus => {
     if (!askedCountry) return "idle";
-    if (country.cca2 === askedCountry.cca2) {
+    if (country.cca3 === askedCountry.cca3) {
       setQuestionStatus("correct");
       const newGameCountries = gameCountries.filter(
-        (c) => c.cca2 !== country.cca2,
+        (c) => c.cca3 !== country.cca3,
       );
       setTimeout(() => {
         setGameCountries(newGameCountries);
@@ -95,14 +110,17 @@ export function GameProvider({
   };
 
   useEffect(() => {
-    if (gameState === "playing" && gameCountries.length === 0)
+    if (gameState === "playing" && gameCountries.length === 0) {
       setGameState("win");
+      stopTimer();
+    }
   }, [gameState, gameCountries]);
 
   const value = {
     gameState,
     questionStatus,
     gameCountries,
+    timer,
     setGameState,
     askedCountry,
     initGameState,
