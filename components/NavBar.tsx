@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import ProfilePopover from "./ProfilePopover";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useSession } from "next-auth/react";
-import { LoaderIcon } from "lucide-react";
+import { LoaderIcon, User } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "@/contexts/ThemeProvider";
 
@@ -32,7 +32,7 @@ const NavBar = () => {
               width={40}
               height={40}
             />
-            <h1 className="text-3xl text-primary dark:text-white font-mea-culpa">
+            <h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden sm:block">
               Cartomania
             </h1>
           </div>
@@ -45,7 +45,10 @@ const NavBar = () => {
             <ProfilePopover />
           ) : (
             <Button asChild>
-              <Link href={"/login"}>Login</Link>
+              <Link href={"/login"}>
+                <User className="sm:hidden block h-4 w-4" />
+                <span className="sm:block hidden">Login</span>
+              </Link>
             </Button>
           )
         ) : (

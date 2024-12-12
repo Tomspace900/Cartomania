@@ -10,7 +10,7 @@ interface GamePromptProps {
 
 export const GamePrompt = ({ country, questionStatus }: GamePromptProps) => {
   return (
-    <div className="fixed top-10 w-fit z-50">
+    <div className="fixed top-8 w-fit z-50">
       <div
         className={`flex justify-center rounded-full border backdrop-blur-sm px-8 py-3 ${
           questionStatus === "incorrect"

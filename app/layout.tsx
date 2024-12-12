@@ -6,6 +6,7 @@ import { ThemeProvider } from "../contexts/ThemeProvider";
 import NavBar from "@/components/NavBar";
 import { SessionProvider } from "next-auth/react";
 import React from "react";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,12 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider defaultTheme="light">
+        <ThemeProvider defaultTheme="dark">
           <SessionProvider>
             <div className="flex justify-center w-full">
               <div className="flex flex-col items-center w-full max-w-6xl gap-8 min-h-screen">
                 <NavBar />
                 {children}
+                <Footer />
               </div>
             </div>
           </SessionProvider>

@@ -15,8 +15,8 @@ const ProfilePopover = () => {
       <Popover>
         <Button asChild variant={"secondary"}>
           <PopoverTrigger>
-            {user.name}
-            <User className="ml-2 h-4 w-4" />
+            <div className="hidden sm:block">{user.name}</div>
+            <User className="sm:ml-2 h-4 w-4" />
           </PopoverTrigger>
         </Button>
         <PopoverContent className="flex flex-col gap-4 mx-4 w-fit min-w-[220px]">
