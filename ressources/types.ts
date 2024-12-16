@@ -34,12 +34,23 @@ export interface Country {
   };
 }
 
+export interface Continent {
+  name: string;
+  code: ContinentCode;
+}
+
 export type ContinentCode = "AF" | "NA" | "SA" | "AS" | "EU" | "OC" | "AN";
 
 export type CountryCode = string;
 export type LanguageCode = string;
 
-export type Region = "Africa" | "Americas" | "Asia" | "Europe" | "Oceania" | "";
+export type Region =
+  | "Africa"
+  | "Americas"
+  | "Asia"
+  | "Europe"
+  | "Oceania"
+  | "Antarctica";
 
 export type Subregion =
   | "Northern Africa"
@@ -64,4 +75,4 @@ export type Subregion =
   | "Melanesia"
   | "Micronesia"
   | "Polynesia"
-  | "";
+  | "Antarctica";
