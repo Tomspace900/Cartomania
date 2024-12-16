@@ -51,6 +51,7 @@ const Game = () => {
     getURLFromRegion(getAm5ContinentByCode(continentCode)?.name);
 
   switch (gameState) {
+    case "error":
     case "loading":
       return <Loader />;
 

@@ -12,13 +12,17 @@ import _, { sample } from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
 import { useTimer } from "@/hooks/use-timer";
 
+import { redirect } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+
 export type IGameLoadingState =
   | "idle"
   | "loading"
   | "loaded"
   | "playing"
   | "win"
-  | "lose";
+  | "lose"
+  | "error";
 
 export type QuestionStatus = "idle" | "correct" | "incorrect";
 
@@ -65,6 +69,7 @@ export function GameProvider({
   const [askedCountry, setAskedCountry] = useState<Country>();
   const [questionStatus, setQuestionStatus] = useState<QuestionStatus>("idle");
   const { timer, startTimer, stopTimer } = useTimer();
+  const { toast } = useToast();
 
   const getRandomCountry = useCallback((countries: Country[]): Country => {
     return sample(countries) as Country;
@@ -98,6 +103,11 @@ export function GameProvider({
       isCorrect: undefined,
     }));
 
+    if (shuffledGameCountries.length === 0) {
+      setGameState("error");
+      return;
+    }
+
     setGameCountries(shuffledGameCountries);
     setAskedCountry(getRandomCountry(shuffledGameCountries));
     setGameState("loaded");
@@ -127,6 +137,15 @@ export function GameProvider({
     if (gameState === "playing" && gameCountries.length === 0) {
       setGameState("win");
       stopTimer();
+    }
+    if (gameState === "error") {
+      stopTimer();
+      toast({
+        variant: "destructive",
+        title: "Oups ! 😅",
+        description: "Tout ne s'est pas passé comme prévu, désolé\u00A0!",
+      });
+      redirect("/");
     }
   }, [gameState, gameCountries]);
 
