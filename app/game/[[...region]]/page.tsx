@@ -24,10 +24,10 @@ const Game = () => {
   } = useGameState();
 
   useEffect(() => {
-    const { region, subregion } = isParamMatchAnyRegionOrSubregion(
+    const { continentCode, subregion } = isParamMatchAnyRegionOrSubregion(
       params.region,
     );
-    initGameState(region, subregion, true);
+    initGameState(continentCode, subregion, false);
   }, [params]);
 
   switch (gameState) {

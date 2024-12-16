@@ -1,5 +1,5 @@
-import { getRegions, getSubregions } from "@/ressources/getCountries";
-import { Region, Subregion } from "@/ressources/types";
+import { getAm5Continents, getSubregions } from "@/ressources/getCountries";
+import { ContinentCode, Subregion } from "@/ressources/types";
 import { clsx, type ClassValue } from "clsx";
 import _ from "lodash";
 import { twMerge } from "tailwind-merge";
@@ -26,15 +26,18 @@ export function getURLFromRegion(region?: string): string | undefined {
 
 export const isParamMatchAnyRegionOrSubregion = (
   region?: string[],
-): { region?: Region; subregion?: Subregion } => {
+): {
+  continentCode?: ContinentCode;
+  subregion?: Subregion;
+} => {
   if (!region) return {};
-  const regions: Region[] = getRegions();
+  const continents = getAm5Continents();
   const subregions: Subregion[] = getSubregions();
 
   const regionOrSubregion = region.map((r) => getRegionFromURL(r));
 
-  const regionMatch = _.find(regions, (value) =>
-    _.includes(regionOrSubregion, value.toLowerCase()),
+  const continentMatch = _.find(continents, (value) =>
+    _.includes(regionOrSubregion, value.name.toLowerCase()),
   );
 
   const subregionMatch = _.find(subregions, (value) =>
@@ -42,7 +45,7 @@ export const isParamMatchAnyRegionOrSubregion = (
   );
 
   return {
-    region: regionMatch,
+    continentCode: continentMatch?.code,
     subregion: subregionMatch,
   };
 };

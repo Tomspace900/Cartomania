@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Country, Region, Subregion } from "@/ressources/types";
+import { ContinentCode, Country, Subregion } from "@/ressources/types";
 import _, { sample } from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
 import { useTimer } from "@/hooks/use-timer";
@@ -24,7 +24,7 @@ interface IGameContext {
   timer: number;
   setGameState: (state: IGameLoadingState) => void;
   initGameState: (
-    region?: Region,
+    continentCode?: ContinentCode,
     subregion?: Subregion,
     UNMembers?: boolean,
   ) => void;
@@ -63,15 +63,17 @@ export function GameProvider({
   }, []);
 
   const initGameState = (
-    region?: Region,
+    continentCode?: ContinentCode,
     subregion?: Subregion,
     UNMembers?: boolean,
   ) => {
     setGameState("loading");
     const countries = UNMembers ? getUNMembersCountries() : getCountries();
 
-    const filteredCountries = region
-      ? countries.filter((country) => country.region === region)
+    const filteredCountries = continentCode
+      ? countries.filter(
+          (country) => country.am5.continentCode === continentCode,
+        )
       : subregion
         ? countries.filter((country) => country.subregion === subregion)
         : countries;

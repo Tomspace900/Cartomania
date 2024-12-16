@@ -3,14 +3,12 @@
 import Glob from "@/components/Glob";
 import { Button } from "@/components/ui/button";
 import { getURLFromRegion } from "@/lib/utils";
-import { getRegions, getSubregions } from "@/ressources/getCountries";
+import { getAm5Continents, getSubregions } from "@/ressources/getCountries";
 import Link from "next/link";
-import world from "@amcharts/amcharts5-geodata/worldOutlineLow";
-// import continents from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
-// import countries from "@amcharts/amcharts5-geodata/worldLow";
+import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
 
 export default function Home() {
-  const regions = getRegions();
+  const continents = getAm5Continents();
   const subregions = getSubregions();
 
   return (
@@ -18,13 +16,15 @@ export default function Home() {
       <div className="flex flex-col gap-6 justify-center items-center">
         <h1 className="text-2xl">Choose a region...</h1>
         <div className="flex gap-2 flex-wrap justify-center">
-          {regions.map((region) => (
+          {continents.map((continent) => (
             <Button
-              key={region}
+              key={continent.name}
               asChild
               className="hover:scale-[1.02] transition-transform duration-100 ease-in-out"
             >
-              <Link href={`/game/${getURLFromRegion(region)}`}>{region}</Link>
+              <Link href={`/game/${getURLFromRegion(continent.name)}`}>
+                {continent.name}
+              </Link>
             </Button>
           ))}
         </div>
@@ -48,19 +48,9 @@ export default function Home() {
       </div>
       <div className="flex items-center min-h-[300px] flex-grow">
         <div className="w-full h-full max-h-[500px]">
-          <Glob name="world" geoData={world} />
+          <Glob name="world" geoData={[continentsGeoData]} animate />
         </div>
       </div>
-      {/* <div className="flex items-center min-h-[300px] flex-grow">
-        <div className="w-full h-full max-h-[500px]">
-          <Glob name="continents" geoData={continents} />
-        </div>
-      </div>
-      <div className="flex items-center min-h-[300px] flex-grow">
-        <div className="w-full h-full max-h-[500px]">
-          <Glob name="countries" geoData={countries} />
-        </div>
-      </div> */}
     </div>
   );
 }

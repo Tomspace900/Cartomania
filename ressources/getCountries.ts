@@ -1,7 +1,14 @@
 // ! Ça c'est deg mais on va faire ça proprement côté serveur api
 
 import countries from "@/ressources/countries.json";
-import { Country, CountryCode, Region, Subregion } from "./types";
+import {
+  ContinentCode,
+  Country,
+  CountryCode,
+  Region,
+  Subregion,
+} from "./types";
+import _ from "lodash";
 
 export function getCountries(): Country[] {
   return countries as unknown as Country[];
@@ -17,6 +24,21 @@ export function getCountryByCode(code: CountryCode): Country {
   return countries.find(
     (country) => country.cca3 === code,
   ) as unknown as Country;
+}
+
+export function getAm5Continents(): { name: string; code: ContinentCode }[] {
+  return Array.from(
+    _.uniqBy(
+      countries.map(
+        (country) =>
+          ({
+            name: country.am5.continent,
+            code: country.am5.continentCode,
+          }) as { name: string; code: ContinentCode },
+      ),
+      "code",
+    ),
+  );
 }
 
 export function getRegions(): Region[] {

@@ -5,22 +5,21 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 interface IGlobProps {
   name: string;
-  geoData: any;
+  // eslint-disable-next-line no-undef
+  geoData: GeoJSON.GeoJSON[];
+  animate?: boolean;
 }
 
-const Glob = ({ name, geoData }: IGlobProps) => {
+const Glob = ({ name, geoData, animate }: IGlobProps) => {
   useLayoutEffect(() => {
-    // Create root element
     const root = am5.Root.new(name);
-
-    // Set themes
     root.setThemes([am5themes_Animated.new(root)]);
 
     // Create the map chart
     const chart = root.container.children.push(
       am5map.MapChart.new(root, {
-        panX: "none",
-        panY: "none",
+        panX: "rotateX",
+        panY: "rotateY",
         projection: am5map.geoOrthographic(),
         homeGeoPoint: { longitude: 2.33, latitude: 48.87 }, // Paris
         wheelX: "none",
@@ -28,7 +27,7 @@ const Glob = ({ name, geoData }: IGlobProps) => {
       }),
     );
 
-    // Create series for background fill
+    // Background fill
     const backgroundSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {}),
     );
@@ -38,29 +37,10 @@ const Glob = ({ name, geoData }: IGlobProps) => {
       strokeOpacity: 0,
     });
 
-    // Add background polygon
+    // Background grid
     backgroundSeries.data.push({
       geometry: am5map.getGeoRectangle(90, 180, -90, -180),
     });
-
-    // Create main polygon series for countries
-    const polygonSeries = chart.series.push(
-      am5map.MapPolygonSeries.new(root, {
-        geoJSON: geoData,
-        exclude: ["AQ"],
-      }),
-    );
-
-    // Set up the series
-    polygonSeries.mapPolygons.template.setAll({
-      fill: am5.color("#8066d6"),
-      fillOpacity: 0.7,
-      strokeOpacity: 0,
-      // strokeWidth: 0.25,
-      // stroke: am5.color("#ffffff"),
-    });
-
-    // Create graticule series
     const graticuleSeries = chart.series.push(
       am5map.GraticuleSeries.new(root, {}),
     );
@@ -69,14 +49,41 @@ const Glob = ({ name, geoData }: IGlobProps) => {
       strokeOpacity: 0.08,
     });
 
-    // Rotate the globe
-    chart.animate({
-      key: "rotationX",
-      from: 0,
-      to: 360,
-      duration: 20000,
-      loops: Infinity,
+    // Data series
+    geoData.forEach((geo) => {
+      // Create main polygon series
+      const polygonSeries = chart.series.push(
+        am5map.MapPolygonSeries.new(root, {
+          geoJSON: geo,
+        }),
+      );
+      // Configure polygon series
+      polygonSeries.mapPolygons.template.setAll({
+        fill: am5.color("#8066d6"),
+        fillOpacity: 0.7,
+        // strokeOpacity: 0,
+        strokeWidth: 0.25,
+        stroke: am5.color("#ffffff"),
+        cursorOverStyle: "pointer",
+      });
+      // Add hover effects
+      polygonSeries.mapPolygons.template.events.on("pointerover", (event) =>
+        event.target.setAll({ fillOpacity: 1 }),
+      );
+      polygonSeries.mapPolygons.template.events.on("pointerout", (event) =>
+        event.target.setAll({ fillOpacity: 0.7 }),
+      );
     });
+
+    // Rotate the globe
+    animate &&
+      chart.animate({
+        key: "rotationX",
+        from: 0,
+        to: 360,
+        duration: 20000,
+        loops: Infinity,
+      });
 
     // Clean up on unmount
     return () => {

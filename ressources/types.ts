@@ -26,7 +26,15 @@ export interface Country {
   borders: CountryCode[];
   area: number;
   UNMember: boolean;
+  am5: {
+    name: string;
+    continent: string;
+    continentCode: ContinentCode;
+    maps: string[];
+  };
 }
+
+export type ContinentCode = "AF" | "NA" | "SA" | "AS" | "EU" | "OC" | "AN";
 
 export type CountryCode = string;
 export type LanguageCode = string;
