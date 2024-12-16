@@ -9,11 +9,12 @@ interface FlagProps {
   country: Country;
   onClick: (country: Country) => QuestionStatus;
   isLazy?: boolean;
+  disabled?: boolean;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_FLAGCDN_BASE_URL;
 
-export const Flag = ({ country, onClick, isLazy }: FlagProps) => {
+export const Flag = ({ country, onClick, isLazy, disabled }: FlagProps) => {
   const [status, setStatus] = useState<QuestionStatus>("idle");
 
   const handleClick = () => {
@@ -27,11 +28,13 @@ export const Flag = ({ country, onClick, isLazy }: FlagProps) => {
   return (
     <div
       className={`rounded-md cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out ${
-        status === "incorrect"
-          ? "error-shake error-red"
-          : status === "correct"
-            ? "success-bounce success-green"
-            : ""
+        disabled
+          ? "pointer-events-none opacity-50"
+          : status === "incorrect"
+            ? "error-shake error-red"
+            : status === "correct"
+              ? "success-bounce success-green"
+              : ""
       }`}
     >
       <Image

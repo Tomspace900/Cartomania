@@ -12,7 +12,13 @@ import _, { sample } from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
 import { useTimer } from "@/hooks/use-timer";
 
-export type IGameLoadingState = "idle" | "loading" | "playing" | "win" | "lose";
+export type IGameLoadingState =
+  | "idle"
+  | "loading"
+  | "loaded"
+  | "playing"
+  | "win"
+  | "lose";
 
 export type QuestionStatus = "idle" | "correct" | "incorrect";
 
@@ -28,6 +34,7 @@ interface IGameContext {
     subregion?: Subregion,
     UNMembers?: boolean,
   ) => void;
+  startGame: () => void;
   handleClickedCountry: (country: Country) => QuestionStatus;
   getRandomCountry: (countries: Country[]) => Country;
 }
@@ -40,6 +47,7 @@ const initialState: IGameContext = {
   timer: 0,
   setGameState: () => {},
   initGameState: () => {},
+  startGame: () => {},
   handleClickedCountry: () => "idle",
   getRandomCountry: () => ({}) as Country,
 };
@@ -61,6 +69,11 @@ export function GameProvider({
   const getRandomCountry = useCallback((countries: Country[]): Country => {
     return sample(countries) as Country;
   }, []);
+
+  const startGame = () => {
+    setGameState("playing");
+    startTimer();
+  };
 
   const initGameState = (
     continentCode?: ContinentCode,
@@ -87,8 +100,7 @@ export function GameProvider({
 
     setGameCountries(shuffledGameCountries);
     setAskedCountry(getRandomCountry(shuffledGameCountries));
-    setGameState("playing");
-    startTimer();
+    setGameState("loaded");
   };
 
   const handleClickedCountry = (country: Country): QuestionStatus => {
@@ -126,6 +138,7 @@ export function GameProvider({
     setGameState,
     askedCountry,
     initGameState,
+    startGame,
     handleClickedCountry,
     getRandomCountry,
   };

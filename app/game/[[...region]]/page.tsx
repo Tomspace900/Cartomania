@@ -12,21 +12,19 @@ import { Timer } from "lucide-react";
 
 const Game = () => {
   const params = useParams<{ region?: string[] }>();
+  const { continentCode, subregion } = isParamMatchAnyRegionOrSubregion(
+    params.region,
+  );
 
   const {
     gameState,
-    questionStatus,
     gameCountries,
     timer,
-    askedCountry,
     initGameState,
     handleClickedCountry,
   } = useGameState();
 
   useEffect(() => {
-    const { continentCode, subregion } = isParamMatchAnyRegionOrSubregion(
-      params.region,
-    );
     initGameState(continentCode, subregion, false);
   }, [params]);
 
@@ -64,17 +62,11 @@ const Game = () => {
         </>
       );
 
+    case "loaded":
     case "playing":
       return (
         <div className="flex flex-col w-full items-center gap-4">
-          {askedCountry && (
-            <GamePill
-              country={askedCountry}
-              questionStatus={questionStatus}
-              timer={timer}
-            />
-          )}
-
+          <GamePill />
           <div className="flex flex-wrap gap-8 justify-center items-center max-w-3xl">
             {gameCountries.map((country, index) => (
               <Flag
@@ -82,6 +74,7 @@ const Game = () => {
                 country={country}
                 onClick={handleClickedCountry}
                 isLazy={index >= 20}
+                disabled={gameState === "loaded"}
               />
             ))}
           </div>
