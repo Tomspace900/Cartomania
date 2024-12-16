@@ -12,8 +12,10 @@ import Link from "next/link";
 import { useState } from "react";
 import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
 import { Continent, Subregion } from "@/ressources/types";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const continents = getAm5Continents();
   const subregions = getSubregions();
   const [globCoordinates, setGlobCoordinates] = useState<[number, number]>();
@@ -26,6 +28,11 @@ export default function Home() {
       const { latitude, longitude } = continentCoordinates[region.code];
       setGlobCoordinates([latitude, longitude]);
     }
+  };
+
+  const handleGlobClick = (event: any) => {
+    const id = event.target.dataItem?.dataContext?.id;
+    router.push(`game/${getURLFromRegion(id)}`);
   };
 
   return (
@@ -74,6 +81,7 @@ export default function Home() {
             geoData={[continentsGeoData]}
             animate
             rotateTo={globCoordinates}
+            handleClick={handleGlobClick}
           />
         </div>
       </div>

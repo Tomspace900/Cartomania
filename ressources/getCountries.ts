@@ -41,6 +41,14 @@ export function getAm5Continents(): { name: string; code: ContinentCode }[] {
   );
 }
 
+export const getAm5ContinentByCode = (code: ContinentCode) => {
+  return getAm5Continents().find((continent) => continent.code === code);
+};
+
+export const getAm5ContinentByName = (name: string) => {
+  return getAm5Continents().find((continent) => continent.name === name);
+};
+
 export function getRegions(): Region[] {
   return Array.from(
     new Set(countries.map((country) => country.region as Region)),

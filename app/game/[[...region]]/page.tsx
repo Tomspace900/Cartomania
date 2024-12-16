@@ -7,8 +7,17 @@ import { Flag } from "@/components/Flag";
 import { GamePill } from "@/components/GamePill";
 import { useGameState } from "@/contexts/GameContext";
 import Confetti from "react-confetti";
-import { formatTimer, isParamMatchAnyRegionOrSubregion } from "@/lib/utils";
+import {
+  continentCoordinates,
+  formatTimer,
+  getURLFromRegion,
+  isParamMatchAnyRegionOrSubregion,
+  subregionCoordinates,
+} from "@/lib/utils";
 import { Timer } from "lucide-react";
+import Glob from "@/components/Glob";
+import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
+import { getAm5ContinentByCode } from "@/ressources/getCountries";
 
 const Game = () => {
   const params = useParams<{ region?: string[] }>();
@@ -25,8 +34,21 @@ const Game = () => {
   } = useGameState();
 
   useEffect(() => {
-    initGameState(continentCode, subregion, false);
+    initGameState(continentCode, subregion, true);
   }, [params]);
+
+  const computeRotateTo = (): [number, number] => {
+    const { latitude, longitude } = continentCode
+      ? continentCoordinates[continentCode]
+      : subregion
+        ? subregionCoordinates[subregion]
+        : { latitude: 0, longitude: 0 };
+    return [latitude, longitude];
+  };
+
+  const polygonToHighlight: string | undefined =
+    continentCode &&
+    getURLFromRegion(getAm5ContinentByCode(continentCode)?.name);
 
   switch (gameState) {
     case "loading":
@@ -50,7 +72,7 @@ const Game = () => {
             numberOfPieces={400}
             gravity={0.1}
           />
-          <div className="flex flex-col justify-center items-center mt-10 text-2xl gap-4">
+          <div className="flex flex-col h-full justify-center items-center mt-10 text-2xl gap-4">
             <div>{`Bravo t'es un(e) chef`}</div>
             {timer && (
               <div className="flex items-center gap-2">
@@ -58,6 +80,14 @@ const Game = () => {
                 {formatTimer(timer)}
               </div>
             )}
+            <div className="w-[400px] min-h-[300px] flex-grow">
+              <Glob
+                name="oui"
+                geoData={[continentsGeoData]}
+                rotateTo={computeRotateTo()}
+                highlightedPolygons={polygonToHighlight}
+              />
+            </div>
           </div>
         </>
       );

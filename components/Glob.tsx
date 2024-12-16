@@ -4,7 +4,6 @@ import React, { useLayoutEffect, useRef } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import { useRouter } from "next/navigation";
 import { getURLFromRegion } from "@/lib/utils";
 
 interface IGlobProps {
@@ -13,16 +12,28 @@ interface IGlobProps {
   geoData: GeoJSON.GeoJSON[];
   animate?: boolean;
   rotateTo?: [number, number];
+  handleClick?: (event: any) => void;
+  highlightedPolygons?: string;
 }
 
 const isMobile = window.innerWidth < 640;
 
-const Glob = ({ name, geoData, animate, rotateTo }: IGlobProps) => {
-  const router = useRouter();
+const Glob = ({
+  name,
+  geoData,
+  animate,
+  rotateTo,
+  handleClick,
+  highlightedPolygons,
+}: IGlobProps) => {
   const currentRotation = useRef({ rotationX: 0, rotationY: 0 });
 
-  const handleClick = (target: string) =>
-    router.push(`game/${getURLFromRegion(target)}`);
+  const isClickable = !!handleClick;
+
+  const isHighlighted = (polygon: am5map.MapPolygon): boolean =>
+    getURLFromRegion(highlightedPolygons) ===
+    // @ts-expect-error normal
+    getURLFromRegion(polygon.dataItem?.dataContext?.id);
 
   useLayoutEffect(() => {
     const root = am5.Root.new(name);
@@ -73,29 +84,38 @@ const Glob = ({ name, geoData, animate, rotateTo }: IGlobProps) => {
       // Configure polygon series
       polygonSeries.mapPolygons.template.setAll({
         fill: am5.color("#8066d6"),
-        fillOpacity: 0.7,
+        fillOpacity: highlightedPolygons ? 0.5 : 0.7,
         // strokeOpacity: 0,
         strokeWidth: 0.25,
         stroke: am5.color("#ffffff"),
-        cursorOverStyle: "pointer",
+        cursorOverStyle: isClickable ? "pointer" : "default",
       });
+      // Highlight selected countries
+      polygonSeries.events.on("datavalidated", () => {
+        polygonSeries.mapPolygons.each((polygon) => {
+          if (isHighlighted(polygon)) {
+            polygon.setAll({
+              fillOpacity: 1,
+            });
+          }
+        });
+      });
+
       // Add hover effects
-      polygonSeries.mapPolygons.template.events.on("pointerover", (event) =>
-        event.target.setAll({ fillOpacity: 1 }),
-      );
-      polygonSeries.mapPolygons.template.events.on("pointerout", (event) =>
-        event.target.setAll({ fillOpacity: 0.7 }),
-      );
-      // Add click event
-      polygonSeries.mapPolygons.template.events.on(
-        "click",
-        (event) => {
-          const polygon = event.target;
-          // @ts-expect-error normal TS error
-          handleClick(polygon.dataItem?.dataContext?.id as string);
-        },
-        { priority: 1 },
-      );
+      if (isClickable) {
+        polygonSeries.mapPolygons.template.events.on("pointerover", (event) =>
+          event.target.setAll({ fillOpacity: 1 }),
+        );
+        polygonSeries.mapPolygons.template.events.on("pointerout", (event) =>
+          event.target.setAll({ fillOpacity: 0.7 }),
+        );
+        // Add click event
+        polygonSeries.mapPolygons.template.events.on(
+          "click",
+          (event) => handleClick(event),
+          { priority: 1 },
+        );
+      }
     });
 
     // Restore the last known rotation
