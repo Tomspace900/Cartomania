@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { Flag } from "@/components/Flag";
-import { GamePrompt } from "@/components/GamePrompt";
+import { GamePill } from "@/components/GamePill";
 import { useGameState } from "@/contexts/GameContext";
 import Confetti from "react-confetti";
 import { formatTimer, isParamMatchAnyRegionOrSubregion } from "@/lib/utils";
@@ -68,7 +68,7 @@ const Game = () => {
       return (
         <div className="flex flex-col w-full items-center gap-4">
           {askedCountry && (
-            <GamePrompt
+            <GamePill
               country={askedCountry}
               questionStatus={questionStatus}
               timer={timer}
