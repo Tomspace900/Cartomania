@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 import { ContinentCode, Country, Subregion } from "@/ressources/types";
-import _, { sample } from "lodash";
+import _ from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
 import { useTimer } from "@/hooks/use-timer";
 
@@ -26,34 +26,44 @@ export type IGameLoadingState =
 
 export type QuestionStatus = "idle" | "correct" | "incorrect";
 
+export type GameCountry = Country & { disabled: boolean };
+
 interface IGameContext {
   gameState: IGameLoadingState;
   questionStatus: QuestionStatus;
-  gameCountries: Country[];
-  askedCountry?: Country;
+  errorCount: number;
+  totalErrorCount: number;
+  gameCountries: GameCountry[];
+  askedCountry?: GameCountry;
   timer: number;
   setGameState: (state: IGameLoadingState) => void;
-  initGameState: (
-    continentCode?: ContinentCode,
-    subregion?: Subregion,
-    UNMembers?: boolean,
-  ) => void;
+  initGame: ({
+    continentCode,
+    subregion,
+    UNMembersOnly,
+  }: {
+    continentCode?: ContinentCode;
+    subregion?: Subregion;
+    UNMembersOnly?: boolean;
+  }) => void;
   startGame: () => void;
-  handleClickedCountry: (country: Country) => QuestionStatus;
-  getRandomCountry: (countries: Country[]) => Country;
+  handleClickedCountry: (country: GameCountry) => QuestionStatus;
+  getRandomCountry: (countries: GameCountry[]) => GameCountry;
 }
 
 const initialState: IGameContext = {
   gameState: "idle",
   questionStatus: "idle",
+  errorCount: 0,
+  totalErrorCount: 0,
   gameCountries: [],
   askedCountry: undefined,
   timer: 0,
   setGameState: () => {},
-  initGameState: () => {},
+  initGame: () => {},
   startGame: () => {},
   handleClickedCountry: () => "idle",
-  getRandomCountry: () => ({}) as Country,
+  getRandomCountry: () => ({}) as GameCountry,
 };
 
 const GameContext = createContext<IGameContext>(initialState);
@@ -65,28 +75,32 @@ export function GameProvider({
   children: React.ReactNode;
 }) {
   const [gameState, setGameState] = useState<IGameLoadingState>("idle");
-  const [gameCountries, setGameCountries] = useState<Country[]>([]);
-  const [askedCountry, setAskedCountry] = useState<Country>();
+  const [gameCountries, setGameCountries] = useState<GameCountry[]>([]);
+  const [askedCountry, setAskedCountry] = useState<GameCountry>();
   const [questionStatus, setQuestionStatus] = useState<QuestionStatus>("idle");
+  const [errorCount, setErrorCount] = useState(0);
+  const [totalErrorCount, setTotalErrorCount] = useState(0);
   const { timer, startTimer, stopTimer } = useTimer();
   const { toast } = useToast();
 
-  const getRandomCountry = useCallback((countries: Country[]): Country => {
-    return sample(countries) as Country;
-  }, []);
+  const getRandomCountry = useCallback(
+    (countries: GameCountry[]): GameCountry => {
+      return _.sample(countries) as GameCountry;
+    },
+    [],
+  );
 
-  const startGame = () => {
-    setGameState("playing");
-    startTimer();
-  };
-
-  const initGameState = (
-    continentCode?: ContinentCode,
-    subregion?: Subregion,
-    UNMembers?: boolean,
-  ) => {
+  const initGame = ({
+    continentCode,
+    subregion,
+    UNMembersOnly,
+  }: {
+    continentCode?: ContinentCode;
+    subregion?: Subregion;
+    UNMembersOnly?: boolean;
+  }) => {
     setGameState("loading");
-    const countries = UNMembers ? getUNMembersCountries() : getCountries();
+    const countries = UNMembersOnly ? getUNMembersCountries() : getCountries();
 
     const filteredCountries = continentCode
       ? countries.filter(
@@ -96,12 +110,13 @@ export function GameProvider({
         ? countries.filter((country) => country.subregion === subregion)
         : countries;
 
-    const shuffledCountries = _.shuffle(filteredCountries);
-    const shuffledGameCountries = shuffledCountries.map((country) => ({
-      ...country,
-      isAsked: false,
-      isCorrect: undefined,
-    }));
+    const shuffledCountries: Country[] = _.shuffle(filteredCountries);
+    const shuffledGameCountries: GameCountry[] = shuffledCountries.map(
+      (country) => ({
+        ...country,
+        disabled: false,
+      }),
+    );
 
     if (shuffledGameCountries.length === 0) {
       setGameState("error");
@@ -113,9 +128,15 @@ export function GameProvider({
     setGameState("loaded");
   };
 
-  const handleClickedCountry = (country: Country): QuestionStatus => {
+  const startGame = () => {
+    setGameState("playing");
+    startTimer();
+  };
+
+  const handleClickedCountry = (country: GameCountry): QuestionStatus => {
     if (!askedCountry) return "idle";
     if (country.cca3 === askedCountry.cca3) {
+      setErrorCount(0);
       setQuestionStatus("correct");
       const newGameCountries = gameCountries.filter(
         (c) => c.cca3 !== country.cca3,
@@ -127,11 +148,54 @@ export function GameProvider({
       }, 500);
       return "correct";
     } else {
+      setErrorCount((prev) => prev + 1);
+      setTotalErrorCount((prev) => prev + 1);
       setQuestionStatus("incorrect");
       setTimeout(() => setQuestionStatus("idle"), 500);
       return "incorrect";
     }
   };
+
+  useEffect(() => {
+    switch (errorCount) {
+      case 1:
+      case 2: {
+        // Disable half of the wrong countries not disabled
+        const enabledCountries = gameCountries.filter(
+          (c) => !c.disabled && c.cca3 !== askedCountry?.cca3,
+        );
+        const toDisableCount = Math.floor(enabledCountries.length / 2);
+        const shuffled = _.shuffle(enabledCountries).slice(0, toDisableCount);
+
+        setGameCountries((prev) =>
+          prev.map((country) =>
+            shuffled.some((c) => c.cca3 === country.cca3)
+              ? { ...country, disabled: true }
+              : country,
+          ),
+        );
+        break;
+      }
+      case 3: {
+        // Disable all the wrong countries
+        setGameCountries((prev) =>
+          prev.map((country) =>
+            country.cca3 === askedCountry?.cca3
+              ? country
+              : { ...country, disabled: true },
+          ),
+        );
+        break;
+      }
+      default: {
+        // Enable all the countries
+        setGameCountries((prev) =>
+          prev.map((country) => ({ ...country, disabled: false })),
+        );
+        break;
+      }
+    }
+  }, [errorCount, setGameCountries, askedCountry]);
 
   useEffect(() => {
     if (gameState === "playing" && gameCountries.length === 0) {
@@ -152,11 +216,13 @@ export function GameProvider({
   const value = {
     gameState,
     questionStatus,
+    errorCount,
+    totalErrorCount,
     gameCountries,
     timer,
     setGameState,
     askedCountry,
-    initGameState,
+    initGame,
     startGame,
     handleClickedCountry,
     getRandomCountry,

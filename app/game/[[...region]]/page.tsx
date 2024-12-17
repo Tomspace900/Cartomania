@@ -18,23 +18,20 @@ import { Timer } from "lucide-react";
 import Glob from "@/components/Glob";
 import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
 import { getAm5ContinentByCode } from "@/ressources/getCountries";
+import { Button } from "@/components/ui/button";
 
 const Game = () => {
   const params = useParams<{ region?: string[] }>();
   const { continentCode, subregion } = isParamMatchAnyRegionOrSubregion(
     params.region,
   );
+  const { gameState, gameCountries, timer, initGame, handleClickedCountry } =
+    useGameState();
 
-  const {
-    gameState,
-    gameCountries,
-    timer,
-    initGameState,
-    handleClickedCountry,
-  } = useGameState();
+  const gameParams = { continentCode, subregion, UNMembersOnly: true };
 
   useEffect(() => {
-    initGameState(continentCode, subregion, true);
+    initGame(gameParams);
   }, [params]);
 
   const computeRotateTo = (): [number, number] => {
@@ -81,6 +78,7 @@ const Game = () => {
                 {formatTimer(timer)}
               </div>
             )}
+            <Button onClick={() => initGame(gameParams)}>Rejouer</Button>
             <div className="w-[400px] min-h-[300px] flex-grow">
               <Glob
                 name="oui"
