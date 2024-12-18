@@ -12,17 +12,17 @@ interface IGlobProps {
   geoData: GeoJSON.GeoJSON[];
   animate?: boolean;
   rotateTo?: [number, number];
+  enableManipulate?: boolean;
   handleClick?: (event: any) => void;
   highlightedPolygons?: string;
 }
-
-const isMobile = window.innerWidth < 640;
 
 const Glob = ({
   name,
   geoData,
   animate,
   rotateTo,
+  enableManipulate,
   handleClick,
   highlightedPolygons,
 }: IGlobProps) => {
@@ -42,12 +42,13 @@ const Glob = ({
     // Create the map chart
     const chart = root.container.children.push(
       am5map.MapChart.new(root, {
-        panX: isMobile ? "rotateX" : "none",
-        panY: isMobile ? "rotateY" : "none",
+        panX: enableManipulate ? "rotateX" : "none",
+        panY: enableManipulate ? "rotateY" : "none",
         projection: am5map.geoOrthographic(),
         homeGeoPoint: { longitude: 2.33, latitude: 48.87 }, // Paris
         wheelX: "none",
         wheelY: "none",
+        pinchZoom: false,
       }),
     );
 

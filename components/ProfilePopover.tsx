@@ -54,16 +54,18 @@ const ProfilePopover = () => {
               </Button>
             )}
 
-            <Button
-              asChild
-              // disabled={scores && scores.length > 0}
-            >
-              {/** // TODO */}
-              <Link href={"/history"}>
-                History
-                <History className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            {isAdmin && ( // Temporarily disabled for users: waiting for database
+              <Button
+                asChild
+                // disabled={scores && scores.length > 0}
+              >
+                {/** // TODO */}
+                <Link href={"/history"}>
+                  History
+                  <History className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            )}
 
             <Button asChild variant="destructive">
               <Link href={"/logout"}>

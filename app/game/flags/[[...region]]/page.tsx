@@ -79,7 +79,7 @@ const Game = () => {
               </div>
             )}
             <Button onClick={() => initGame(gameParams)}>Rejouer</Button>
-            <div className="w-[400px] min-h-[300px] flex-grow">
+            <div className="max-w-full w-[400px] min-h-[300px] flex-grow">
               <Glob
                 name="oui"
                 geoData={[continentsGeoData]}
@@ -96,7 +96,7 @@ const Game = () => {
       return (
         <div className="flex flex-col w-full items-center gap-4">
           <GamePill />
-          <div className="flex flex-wrap gap-8 justify-center items-center max-w-3xl">
+          <div className="grid sm:grid-cols-4 grid-cols-3 sm:gap-8 gap-4 px-4 sm:px-0 items-center max-w-3xl">
             {gameCountries.map((country, index) => (
               <Flag
                 key={country.cca3}

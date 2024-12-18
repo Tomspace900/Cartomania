@@ -14,6 +14,8 @@ import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEurop
 import { Continent, Subregion } from "@/ressources/types";
 import { useRouter } from "next/navigation";
 
+const isMobile = window.innerWidth < 640;
+
 export default function Home() {
   const router = useRouter();
   const continents = getAm5Continents();
@@ -32,7 +34,7 @@ export default function Home() {
 
   const handleGlobClick = (event: any) => {
     const id = event.target.dataItem?.dataContext?.id;
-    router.push(`game/${getURLFromRegion(id)}`);
+    router.push(`game/flags/${getURLFromRegion(id)}`);
   };
 
   return (
@@ -48,7 +50,7 @@ export default function Home() {
               onMouseEnter={() => handleOverLink(continent)}
               onMouseLeave={() => setGlobCoordinates(undefined)}
             >
-              <Link href={`/game/${getURLFromRegion(continent.name)}`}>
+              <Link href={`/game/flags/${getURLFromRegion(continent.name)}`}>
                 {continent.name}
               </Link>
             </Button>
@@ -67,7 +69,7 @@ export default function Home() {
               onMouseEnter={() => handleOverLink(subregion)}
               onMouseLeave={() => setGlobCoordinates(undefined)}
             >
-              <Link href={`/game/${getURLFromRegion(subregion)}`}>
+              <Link href={`/game/flags/${getURLFromRegion(subregion)}`}>
                 {subregion}
               </Link>
             </Button>
@@ -80,6 +82,7 @@ export default function Home() {
             name="world"
             geoData={[continentsGeoData]}
             animate
+            enableManipulate={isMobile}
             rotateTo={globCoordinates}
             handleClick={handleGlobClick}
           />
