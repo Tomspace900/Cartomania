@@ -1,5 +1,3 @@
-"use client";
-
 import { GameProvider } from "@/contexts/GameContext";
 import React from "react";
 
