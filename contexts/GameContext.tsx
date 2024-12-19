@@ -123,6 +123,8 @@ export function GameProvider({
       return;
     }
 
+    setErrorCount(0);
+    setTotalErrorCount(0);
     setGameCountries(shuffledGameCountries);
     setAskedCountry(getRandomCountry(shuffledGameCountries));
     setGameState("loaded");
