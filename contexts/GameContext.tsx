@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { ContinentCode, Country, Subregion } from "@/ressources/types";
+import { ContinentCode, Country } from "@/ressources/types";
 import _ from "lodash";
 import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
 import { useTimer } from "@/hooks/use-timer";
@@ -28,6 +28,11 @@ export type QuestionStatus = "idle" | "correct" | "incorrect";
 
 export type GameCountry = Country & { disabled: boolean };
 
+export interface GameParams {
+  continentCode?: ContinentCode;
+  UNMembersOnly?: boolean;
+}
+
 interface IGameContext {
   gameState: IGameLoadingState;
   questionStatus: QuestionStatus;
@@ -37,15 +42,7 @@ interface IGameContext {
   askedCountry?: GameCountry;
   timer: number;
   setGameState: (state: IGameLoadingState) => void;
-  initGame: ({
-    continentCode,
-    subregion,
-    UNMembersOnly,
-  }: {
-    continentCode?: ContinentCode;
-    subregion?: Subregion;
-    UNMembersOnly?: boolean;
-  }) => void;
+  initGame: (gameParams: GameParams) => void;
   startGame: () => void;
   handleClickedCountry: (country: GameCountry) => QuestionStatus;
   getRandomCountry: (countries: GameCountry[]) => GameCountry;
@@ -90,15 +87,7 @@ export function GameProvider({
     [],
   );
 
-  const initGame = ({
-    continentCode,
-    subregion,
-    UNMembersOnly,
-  }: {
-    continentCode?: ContinentCode;
-    subregion?: Subregion;
-    UNMembersOnly?: boolean;
-  }) => {
+  const initGame = ({ continentCode, UNMembersOnly }: GameParams) => {
     setGameState("loading");
     const countries = UNMembersOnly ? getUNMembersCountries() : getCountries();
 
@@ -106,9 +95,7 @@ export function GameProvider({
       ? countries.filter(
           (country) => country.am5.continentCode === continentCode,
         )
-      : subregion
-        ? countries.filter((country) => country.subregion === subregion)
-        : countries;
+      : countries;
 
     const shuffledCountries: Country[] = _.shuffle(filteredCountries);
     const shuffledGameCountries: GameCountry[] = shuffledCountries.map(

@@ -16,8 +16,7 @@ export interface Country {
   capital: string;
   altSpellings: string[];
   relevance: string;
-  region: Region;
-  subregion: Subregion;
+  subregion: string;
   nativeLanguage: LanguageCode;
   languages: Record<LanguageCode, string>;
   translations: Record<LanguageCode, string>;
@@ -35,44 +34,61 @@ export interface Country {
 }
 
 export interface Continent {
-  name: string;
+  name: ContinentName;
   code: ContinentCode;
+  am5Id: Am5ContinentId;
 }
 
+export type ContinentName =
+  | "Africa"
+  | "Asia"
+  | "Europe"
+  | "North America"
+  | "Oceania"
+  | "South America"
+  | "Antarctica";
 export type ContinentCode = "AF" | "NA" | "SA" | "AS" | "EU" | "OC" | "AN";
+export type Am5ContinentId =
+  | "africa"
+  | "asia"
+  | "europe"
+  | "northAmerica"
+  | "oceania"
+  | "southAmerica"
+  | "antarctica";
 
 export type CountryCode = string;
 export type LanguageCode = string;
 
-export type Region =
-  | "Africa"
-  | "Americas"
-  | "Asia"
-  | "Europe"
-  | "Oceania"
-  | "Antarctica";
+// export type Region =
+//   | "Africa"
+//   | "Americas"
+//   | "Asia"
+//   | "Europe"
+//   | "Oceania"
+//   | "Antarctica";
 
-export type Subregion =
-  | "Northern Africa"
-  | "Middle Africa"
-  | "Western Africa"
-  | "Southern Africa"
-  | "Eastern Africa"
-  | "Northern America"
-  | "Central America"
-  | "Caribbean"
-  | "South America"
-  | "Central Asia"
-  | "Eastern Asia"
-  | "Southern Asia"
-  | "South-Eastern Asia"
-  | "Western Asia"
-  | "Eastern Europe"
-  | "Northern Europe"
-  | "Southern Europe"
-  | "Western Europe"
-  | "Australia and New Zealand"
-  | "Melanesia"
-  | "Micronesia"
-  | "Polynesia"
-  | "Antarctica";
+// export type Subregion =
+//   | "Northern Africa"
+//   | "Middle Africa"
+//   | "Western Africa"
+//   | "Southern Africa"
+//   | "Eastern Africa"
+//   | "Northern America"
+//   | "Central America"
+//   | "Caribbean"
+//   | "South America"
+//   | "Central Asia"
+//   | "Eastern Asia"
+//   | "Southern Asia"
+//   | "South-Eastern Asia"
+//   | "Western Asia"
+//   | "Eastern Europe"
+//   | "Northern Europe"
+//   | "Southern Europe"
+//   | "Western Europe"
+//   | "Australia and New Zealand"
+//   | "Melanesia"
+//   | "Micronesia"
+//   | "Polynesia"
+//   | "Antarctica";

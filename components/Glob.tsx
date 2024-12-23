@@ -4,7 +4,6 @@ import React, { useLayoutEffect, useRef } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import { getURLFromRegion } from "@/lib/utils";
 
 interface IGlobProps {
   name: string;
@@ -14,7 +13,8 @@ interface IGlobProps {
   rotateTo?: [number, number];
   enableManipulate?: boolean;
   handleClick?: (event: any) => void;
-  highlightedPolygons?: string;
+  handleHover?: (event: any) => void;
+  highlightedPolygonId?: string;
 }
 
 const Glob = ({
@@ -24,16 +24,16 @@ const Glob = ({
   rotateTo,
   enableManipulate,
   handleClick,
-  highlightedPolygons,
+  handleHover,
+  highlightedPolygonId,
 }: IGlobProps) => {
   const currentRotation = useRef({ rotationX: 0, rotationY: 0 });
 
   const isClickable = !!handleClick;
 
   const isHighlighted = (polygon: am5map.MapPolygon): boolean =>
-    getURLFromRegion(highlightedPolygons) ===
     // @ts-expect-error normal
-    getURLFromRegion(polygon.dataItem?.dataContext?.id);
+    highlightedPolygonId === polygon.dataItem?.dataContext?.id;
 
   useLayoutEffect(() => {
     const root = am5.Root.new(name);
@@ -85,7 +85,7 @@ const Glob = ({
       // Configure polygon series
       polygonSeries.mapPolygons.template.setAll({
         fill: am5.color("#8066d6"),
-        fillOpacity: highlightedPolygons ? 0.5 : 0.7,
+        fillOpacity: highlightedPolygonId ? 0.5 : 0.7,
         // strokeOpacity: 0,
         strokeWidth: 0.25,
         stroke: am5.color("#ffffff"),
@@ -103,14 +103,17 @@ const Glob = ({
       });
 
       // Add hover effects
-      if (isClickable) {
+      if (handleHover) {
         polygonSeries.mapPolygons.template.events.on("pointerover", (event) =>
-          event.target.setAll({ fillOpacity: 1 }),
+          handleHover(event),
         );
         polygonSeries.mapPolygons.template.events.on("pointerout", (event) =>
-          event.target.setAll({ fillOpacity: 0.7 }),
+          handleHover(event),
         );
-        // Add click event
+      }
+
+      // Add click event
+      if (isClickable) {
         polygonSeries.mapPolygons.template.events.on(
           "click",
           (event) => handleClick(event),

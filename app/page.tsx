@@ -2,40 +2,56 @@
 
 import Glob from "@/components/Glob";
 import { Button } from "@/components/ui/button";
-import {
-  continentCoordinates,
-  getURLFromRegion,
-  subregionCoordinates,
-} from "@/lib/utils";
-import { getAm5Continents, getSubregions } from "@/ressources/getCountries";
+import { continentCoordinates, getURLFromRegion } from "@/lib/utils";
+import { getContinents } from "@/ressources/getCountries";
 import Link from "next/link";
-import { useState } from "react";
-import continentsGeoData from "@amcharts/amcharts5-geodata/continentsRussiaEuropeLow";
-import { Continent, Subregion } from "@/ressources/types";
+import { useCallback, useEffect, useState } from "react";
+import { Continent } from "@/ressources/types";
 import { useRouter } from "next/navigation";
+import { LoadingState } from "@/lib/types";
+import { loadGeodata } from "@/ressources/loadGeoData";
 
 const isMobile = window.innerWidth < 640;
 
 export default function Home() {
   const router = useRouter();
-  const continents = getAm5Continents();
-  const subregions = getSubregions();
+  const continents = getContinents();
+  const [loading, setLoading] = useState<LoadingState>("idle");
+  // eslint-disable-next-line no-undef
+  const [continentsGeoData, setContinentsGeoData] = useState<GeoJSON.GeoJSON>();
   const [globCoordinates, setGlobCoordinates] = useState<[number, number]>();
 
-  const handleOverLink = (region: Continent | Subregion) => {
-    if (typeof region === "string") {
-      const { latitude, longitude } = subregionCoordinates[region];
-      setGlobCoordinates([latitude, longitude]);
-    } else {
-      const { latitude, longitude } = continentCoordinates[region.code];
-      setGlobCoordinates([latitude, longitude]);
-    }
+  const handleOverLink = (continent: Continent) => {
+    const { latitude, longitude } = continentCoordinates[continent.code];
+    setGlobCoordinates([latitude, longitude]);
   };
 
   const handleGlobClick = (event: any) => {
     const id = event.target.dataItem?.dataContext?.id;
     router.push(`game/flags/${getURLFromRegion(id)}`);
   };
+
+  const handleGlobHover = useCallback((event: any) => {
+    const type = event.type;
+    if (type === "pointerover") event.target.setAll({ fillOpacity: 1 });
+    else event.target.setAll({ fillOpacity: 0.7 });
+  }, []);
+
+  useEffect(() => {
+    const fetchGeoData = async () => {
+      setLoading("loading");
+
+      try {
+        await loadGeodata(["continents"], (data) => setContinentsGeoData(data));
+        setLoading("done");
+      } catch (error) {
+        console.error(error);
+        setLoading("failed");
+      }
+    };
+
+    fetchGeoData();
+  }, []);
 
   return (
     <div className="sm:px-12 px-6 max-w-5xl flex flex-col w-full h-full gap-10">
@@ -57,36 +73,21 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* // ! Bloqué sur mobile mais pas sûr de pourquoi */}
-      <div className="sm:flex hidden flex-col gap-6 justify-center items-center">
-        <h1 className="text-2xl">...or a subregion</h1>
-        <div className="flex gap-2 flex-wrap justify-center">
-          {subregions.map((subregion) => (
-            <Button
-              key={subregion}
-              asChild
-              className="hover:scale-[1.02] transition-transform duration-100 ease-in-out"
-              onMouseEnter={() => handleOverLink(subregion)}
-              onMouseLeave={() => setGlobCoordinates(undefined)}
-            >
-              <Link href={`/game/flags/${getURLFromRegion(subregion)}`}>
-                {subregion}
-              </Link>
-            </Button>
-          ))}
-        </div>
-      </div>
+
       <div className="flex items-center min-h-[300px] flex-grow">
-        <div className="w-full h-full max-h-[500px]">
-          <Glob
-            name="world"
-            geoData={[continentsGeoData]}
-            animate
-            enableManipulate={isMobile}
-            rotateTo={globCoordinates}
-            handleClick={handleGlobClick}
-          />
-        </div>
+        {loading === "done" && continentsGeoData && (
+          <div className="w-full h-full max-h-[500px]">
+            <Glob
+              name="world"
+              geoData={[continentsGeoData]}
+              animate
+              enableManipulate={isMobile}
+              rotateTo={globCoordinates}
+              handleClick={handleGlobClick}
+              handleHover={handleGlobHover}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
