@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cartomania 🌍
 
-## Getting Started
+Cartomania is a personal project designed for anyone who wants to learn and test their knowledge about flags, capitals, and countries. Feel free to use it and have fun exploring the world!
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Flags**: Learn and recognize world flags.  
+- **Capitals** *(coming soon)*: Test your knowledge of world capitals.  
+- **Country locations** *(coming soon)*: Identify countries on the map.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js / shadcn/ui  
+- Prisma / AuthJS / postgreSQL 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live Demo
 
-## Learn More
+Check out Cartomania here:  
+👉 **[https://cartomania.thomasgendron.fr](https://cartomania.thomasgendron.fr)**
 
-To learn more about Next.js, take a look at the following resources:
+## Data Sources
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Maps**: [amCharts 5 Maps](https://www.amcharts.com/javascript-maps/)  
+- **Geographic data**: [RESTCountries API](https://github.com/hengkiardo/restcountries)  
+- **Flags**: [flagCDN](https://flagcdn.com/)  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! Feel free to open an issue or submit a pull request to improve the app or add new features.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© Thomas GENDRON 2024. All rights reserved.
+
+---
+
+Thank you for using Cartomania! 🌎
