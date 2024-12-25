@@ -9,9 +9,9 @@ import React, {
 } from "react";
 import { ContinentCode, Country } from "@/ressources/types";
 import _ from "lodash";
-import { getCountries, getUNMembersCountries } from "@/ressources/getCountries";
+import { getCountries } from "@/ressources/countryUtils";
+import { getUNMembersCountries } from "@/lib/utils";
 import { useTimer } from "@/hooks/use-timer";
-
 import { redirect } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -38,6 +38,7 @@ interface IGameContext {
   questionStatus: QuestionStatus;
   errorCount: number;
   totalErrorCount: number;
+  gameRegion?: ContinentCode;
   gameCountries: GameCountry[];
   askedCountry?: GameCountry;
   timer: number;
@@ -53,6 +54,7 @@ const initialState: IGameContext = {
   questionStatus: "idle",
   errorCount: 0,
   totalErrorCount: 0,
+  gameRegion: undefined,
   gameCountries: [],
   askedCountry: undefined,
   timer: 0,
@@ -72,6 +74,7 @@ export function GameProvider({
   children: React.ReactNode;
 }) {
   const [gameState, setGameState] = useState<IGameLoadingState>("idle");
+  const [gameRegion, setGameRegion] = useState<ContinentCode>();
   const [gameCountries, setGameCountries] = useState<GameCountry[]>([]);
   const [askedCountry, setAskedCountry] = useState<GameCountry>();
   const [questionStatus, setQuestionStatus] = useState<QuestionStatus>("idle");
@@ -112,6 +115,7 @@ export function GameProvider({
 
     setErrorCount(0);
     setTotalErrorCount(0);
+    setGameRegion(continentCode);
     setGameCountries(shuffledGameCountries);
     setAskedCountry(getRandomCountry(shuffledGameCountries));
     setGameState("loaded");
@@ -207,6 +211,7 @@ export function GameProvider({
     questionStatus,
     errorCount,
     totalErrorCount,
+    gameRegion,
     gameCountries,
     timer,
     setGameState,

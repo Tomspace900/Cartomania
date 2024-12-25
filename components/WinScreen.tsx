@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ReactConfetti from "react-confetti";
 import { Button } from "./ui/button";
-import { continentCoordinates, formatTimer } from "@/lib/utils";
+import {
+  continentCoordinates,
+  formatTimer,
+  getContinentByCode,
+} from "@/lib/utils";
 import { Timer, X } from "lucide-react";
-import Glob from "@/components/Glob";
+import Map from "@/components/Map";
 import { Am5ContinentId, ContinentCode } from "@/ressources/types";
 import { useGameState } from "@/contexts/GameContext";
 import { isEmpty } from "lodash";
 import { LoadingState } from "@/lib/types";
-import { loadGeodata } from "@/ressources/loadGeoData";
-import { getContinentByCode } from "@/ressources/getCountries";
+import { loadGeodata } from "@/ressources/countryUtils";
 
 interface IWinScreenProps {
   continentCode?: ContinentCode;
@@ -29,14 +32,13 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
     const fetchGeoData = async () => {
       setLoading("loading");
       const places = ["continents"];
-      if (currentContinent) {
-        places.push(`region/world/${currentContinent}`);
-      }
+      if (currentContinent) places.push(`region/world/${currentContinent}`);
 
       try {
-        await loadGeodata(places, (data) => {
-          setGeoData((prev) => [...prev, data]);
-        });
+        const geoDataResults = await Promise.all(
+          places.map((place) => loadGeodata(place)),
+        );
+        setGeoData(geoDataResults);
         setLoading("done");
       } catch (error) {
         console.error(error);
@@ -47,16 +49,10 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
     fetchGeoData();
   }, [currentContinent]);
 
-  useEffect(() => {
-    console.log("geoData", geoData);
-  }, [geoData]);
-
-  const computeRotateTo = (): [number, number] => {
-    const { latitude, longitude } = continentCode
+  const computeRotateTo = (): { longitude: number; latitude: number } =>
+    continentCode
       ? continentCoordinates[continentCode]
       : { latitude: 0, longitude: 0 };
-    return [latitude, longitude];
-  };
 
   return (
     <>
@@ -84,7 +80,8 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
         </Button>
         <div className="max-w-full w-[400px] min-h-[300px] flex-grow">
           {loading === "done" && !isEmpty(geoData) && (
-            <Glob
+            <Map
+              type="glob"
               name="win"
               geoData={geoData}
               rotateTo={computeRotateTo()}

@@ -1,15 +1,15 @@
 "use client";
 
-import Glob from "@/components/Glob";
+import Map from "@/components/Map";
 import { Button } from "@/components/ui/button";
 import { continentCoordinates, getURLFromRegion } from "@/lib/utils";
-import { getContinents } from "@/ressources/getCountries";
+import { getContinents } from "@/ressources/countryUtils";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Continent } from "@/ressources/types";
 import { useRouter } from "next/navigation";
 import { LoadingState } from "@/lib/types";
-import { loadGeodata } from "@/ressources/loadGeoData";
+import { loadGeodata } from "@/ressources/countryUtils";
 
 const isMobile = window.innerWidth < 640;
 
@@ -19,16 +19,18 @@ export default function Home() {
   const [loading, setLoading] = useState<LoadingState>("idle");
   // eslint-disable-next-line no-undef
   const [continentsGeoData, setContinentsGeoData] = useState<GeoJSON.GeoJSON>();
-  const [globCoordinates, setGlobCoordinates] = useState<[number, number]>();
+  const [globCoordinates, setGlobCoordinates] = useState<{
+    longitude: number;
+    latitude: number;
+  }>();
 
   const handleOverLink = (continent: Continent) => {
-    const { latitude, longitude } = continentCoordinates[continent.code];
-    setGlobCoordinates([latitude, longitude]);
+    setGlobCoordinates(continentCoordinates[continent.code]);
   };
 
   const handleGlobClick = (event: any) => {
     const id = event.target.dataItem?.dataContext?.id;
-    router.push(`game/flags/${getURLFromRegion(id)}`);
+    router.push(`game/${getURLFromRegion(id)}/flags`);
   };
 
   const handleGlobHover = useCallback((event: any) => {
@@ -42,7 +44,8 @@ export default function Home() {
       setLoading("loading");
 
       try {
-        await loadGeodata(["continents"], (data) => setContinentsGeoData(data));
+        const data = await loadGeodata("continents", true);
+        setContinentsGeoData(data);
         setLoading("done");
       } catch (error) {
         console.error(error);
@@ -58,6 +61,13 @@ export default function Home() {
       <div className="flex flex-col gap-6 justify-center items-center">
         <h1 className="text-2xl">Select a continent...</h1>
         <div className="flex gap-2 flex-wrap justify-center">
+          <Button
+            key={"world"}
+            asChild
+            className="hover:scale-[1.02] transition-transform duration-100 ease-in-out"
+          >
+            <Link href={`/game/world/flags`}>World</Link>
+          </Button>
           {continents.map((continent) => (
             <Button
               key={continent.name}
@@ -66,7 +76,7 @@ export default function Home() {
               onMouseEnter={() => handleOverLink(continent)}
               onMouseLeave={() => setGlobCoordinates(undefined)}
             >
-              <Link href={`/game/flags/${getURLFromRegion(continent.name)}`}>
+              <Link href={`/game/${getURLFromRegion(continent.name)}/flags`}>
                 {continent.name}
               </Link>
             </Button>
@@ -77,11 +87,12 @@ export default function Home() {
       <div className="flex items-center min-h-[300px] flex-grow">
         {loading === "done" && continentsGeoData && (
           <div className="w-full h-full max-h-[500px]">
-            <Glob
+            <Map
+              type="glob"
               name="world"
               geoData={[continentsGeoData]}
               animate
-              enableManipulate={isMobile}
+              enablePan={isMobile}
               rotateTo={globCoordinates}
               handleClick={handleGlobClick}
               handleHover={handleGlobHover}

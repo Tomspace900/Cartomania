@@ -1,5 +1,5 @@
-import { getContinents } from "@/ressources/getCountries";
-import { ContinentCode } from "@/ressources/types";
+import { getContinents, getCountries } from "@/ressources/countryUtils";
+import { ContinentCode, Country, CountryCode } from "@/ressources/types";
 import { clsx, type ClassValue } from "clsx";
 import _ from "lodash";
 import { twMerge } from "tailwind-merge";
@@ -29,18 +29,31 @@ export function getURLFromRegion(region?: string): string | undefined {
 }
 
 export const isParamMatchAnyContinent = (
-  params?: string[],
+  params?: string,
 ): ContinentCode | undefined => {
   if (!params) return undefined;
   const continents = getContinents();
 
-  const continent = params.map((r) => getRegionFromURL(r));
+  const continent = getRegionFromURL(params);
 
   const continentMatch = _.find(continents, (value) =>
     _.includes(continent, value.name.toLowerCase()),
   );
 
   return continentMatch?.code;
+};
+
+export function getUNMembersCountries(): Country[] {
+  return getCountries().filter((country) => country.UNMember);
+}
+
+export function getCountryByCode(code: CountryCode): Country | undefined {
+  return getCountries().find((country) => country.cca3 === code);
+}
+
+export const getContinentByCode = (code?: ContinentCode) => {
+  if (!code) return undefined;
+  return getContinents().find((continent) => continent.code === code);
 };
 
 type ContinentCoordinates = {

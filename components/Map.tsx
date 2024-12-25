@@ -5,30 +5,38 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
-interface IGlobProps {
+interface IMapProps {
+  type: "map" | "glob";
   name: string;
   // eslint-disable-next-line no-undef
   geoData: GeoJSON.GeoJSON[];
   animate?: boolean;
-  rotateTo?: [number, number];
-  enableManipulate?: boolean;
+  center?: { longitude: number; latitude: number };
+  rotateTo?: { longitude: number; latitude: number };
+  zoom?: number;
+  enableZoom?: boolean;
+  enablePan?: boolean;
   handleClick?: (event: any) => void;
   handleHover?: (event: any) => void;
   highlightedPolygonId?: string;
 }
 
-const Glob = ({
+const Map = ({
+  type,
   name,
   geoData,
   animate,
+  center,
   rotateTo,
-  enableManipulate,
+  zoom = 1,
+  enableZoom = false,
+  enablePan = false,
   handleClick,
   handleHover,
   highlightedPolygonId,
-}: IGlobProps) => {
+}: IMapProps) => {
+  const chartRef = useRef<am5map.MapChart | null>(null);
   const currentRotation = useRef({ rotationX: 0, rotationY: 0 });
-
   const isClickable = !!handleClick;
 
   const isHighlighted = (polygon: am5map.MapPolygon): boolean =>
@@ -42,15 +50,22 @@ const Glob = ({
     // Create the map chart
     const chart = root.container.children.push(
       am5map.MapChart.new(root, {
-        panX: enableManipulate ? "rotateX" : "none",
-        panY: enableManipulate ? "rotateY" : "none",
-        projection: am5map.geoOrthographic(),
-        homeGeoPoint: { longitude: 2.33, latitude: 48.87 }, // Paris
+        panX: enablePan ? (type === "glob" ? "rotateX" : "translateX") : "none",
+        panY: enablePan ? (type === "glob" ? "rotateY" : "translateY") : "none",
+        projection:
+          type === "map" ? am5map.geoMercator() : am5map.geoOrthographic(),
+        wheelY: enableZoom ? "zoom" : "none",
         wheelX: "none",
-        wheelY: "none",
-        pinchZoom: false,
+        pinchZoom: enableZoom,
       }),
     );
+
+    chartRef.current = chart;
+
+    // Configuration du zoom
+    chart.set("zoomLevel", zoom);
+    chart.set("maxZoomLevel", 32);
+    chart.set("minZoomLevel", 1);
 
     // Background fill
     const backgroundSeries = chart.series.push(
@@ -61,11 +76,12 @@ const Glob = ({
       fillOpacity: 0.1,
       strokeOpacity: 0,
     });
+    backgroundSeries.data.push({
+      geometry:
+        type === "glob" ? am5map.getGeoRectangle(90, 180, -90, -180) : null,
+    });
 
     // Background grid
-    backgroundSeries.data.push({
-      geometry: am5map.getGeoRectangle(90, 180, -90, -180),
-    });
     const graticuleSeries = chart.series.push(
       am5map.GraticuleSeries.new(root, {}),
     );
@@ -119,14 +135,28 @@ const Glob = ({
           (event) => handleClick(event),
           { priority: 1 },
         );
+        polygonSeries.mapPolygons.template.events.on("pointerover", (event) =>
+          event.target.setAll({ fillOpacity: 1 }),
+        );
+        polygonSeries.mapPolygons.template.events.on("pointerout", (event) =>
+          event.target.setAll({ fillOpacity: 0.7 }),
+        );
       }
     });
+
+    // Centrer sur une zone spécifique si demandé
+    if (center) {
+      chart.set("homeGeoPoint", {
+        longitude: center.longitude,
+        latitude: center.latitude,
+      });
+    }
 
     // Restore the last known rotation
     const { rotationX, rotationY } = currentRotation.current;
 
     if (rotateTo) {
-      const [latitude, longitude] = rotateTo;
+      const { longitude, latitude } = rotateTo;
 
       chart.animate({
         key: "rotationX",
@@ -174,9 +204,26 @@ const Glob = ({
       };
       root.dispose();
     };
-  }, [rotateTo]);
+  }, [rotateTo, center, zoom]);
+
+  // Méthode pour centrer la carte sur des coordonnées spécifiques
+  const centerOn = (longitude: number, latitude: number) => {
+    if (chartRef.current) {
+      chartRef.current.set("homeGeoPoint", {
+        longitude,
+        latitude,
+      });
+    }
+  };
+
+  // Méthode pour définir le niveau de zoom
+  const setZoomLevel = (level: number) => {
+    if (chartRef.current) {
+      chartRef.current.set("zoomLevel", level);
+    }
+  };
 
   return <div id={name} className="w-full h-full"></div>;
 };
 
-export default Glob;
+export default Map;

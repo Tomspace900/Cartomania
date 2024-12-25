@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import ProfilePopover from "./ProfilePopover";
@@ -15,6 +15,7 @@ const NavBar = () => {
   const user = data?.user;
   const pathname = usePathname();
   const { theme } = useTheme();
+  const { mode } = useParams<{ mode: string }>();
 
   // Hide the NavBar on login & logout pages
   if (pathname.startsWith("/login") || pathname.startsWith("/logout")) {
@@ -22,7 +23,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="flex h-24 w-full justify-between items-center px-4">
+    <div className="flex min-h-20 w-full justify-between items-center px-4">
       <div className="flex items-center gap-4">
         <Link href={"/"}>
           <div className="flex items-center gap-2">
@@ -33,7 +34,12 @@ const NavBar = () => {
               height={40}
             />
             <h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden sm:block">
-              Cartomania
+              {`Cartomania `}
+              {mode && (
+                <span className="text-lg text-primary dark:text-white">
+                  {`/${mode}`}
+                </span>
+              )}
             </h1>
           </div>
         </Link>
