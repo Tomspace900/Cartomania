@@ -41,8 +41,7 @@ interface IGameContext {
   gameRegion?: ContinentCode;
   gameCountries: GameCountry[];
   askedCountry?: GameCountry;
-  timer: number;
-  setGameState: (state: IGameLoadingState) => void;
+  getTimer: () => number;
   initGame: (gameParams: GameParams) => void;
   startGame: () => void;
   handleClickedCountry: (country: GameCountry) => QuestionStatus;
@@ -57,8 +56,7 @@ const initialState: IGameContext = {
   gameRegion: undefined,
   gameCountries: [],
   askedCountry: undefined,
-  timer: 0,
-  setGameState: () => {},
+  getTimer: () => 0,
   initGame: () => {},
   startGame: () => {},
   handleClickedCountry: () => "idle",
@@ -80,7 +78,7 @@ export function GameProvider({
   const [questionStatus, setQuestionStatus] = useState<QuestionStatus>("idle");
   const [errorCount, setErrorCount] = useState(0);
   const [totalErrorCount, setTotalErrorCount] = useState(0);
-  const { timer, startTimer, stopTimer } = useTimer();
+  const { getTimer, startTimer, stopTimer } = useTimer();
   const { toast } = useToast();
 
   const getRandomCountry = useCallback(
@@ -213,9 +211,8 @@ export function GameProvider({
     totalErrorCount,
     gameRegion,
     gameCountries,
-    timer,
-    setGameState,
     askedCountry,
+    getTimer,
     initGame,
     startGame,
     handleClickedCountry,

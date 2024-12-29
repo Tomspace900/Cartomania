@@ -1,40 +1,37 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useTimer() {
-  const [timer, setTimer] = useState<number>(0);
-  // eslint-disable-next-line no-undef
-  const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
-    null,
-  );
+  const timerRef = useRef(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const startTimer = () => {
+  const getTimer = useCallback(() => timerRef.current, []);
+
+  const startTimer = useCallback(() => {
     stopTimer();
-    setTimer(0);
-    setTimerInterval(
-      setInterval(() => {
-        setTimer((prev) => prev + 1);
-      }, 1000),
-    );
-  };
+    timerRef.current = 0;
+    intervalRef.current = setInterval(() => {
+      timerRef.current += 1;
+    }, 1000);
+  }, []);
 
-  const stopTimer = () => {
-    if (timerInterval) {
-      clearInterval(timerInterval);
-      setTimerInterval(null);
+  const stopTimer = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  };
+  }, []);
 
   useEffect(() => {
     return () => {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        setTimerInterval(null);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [timerInterval]);
+  }, []);
 
   return {
-    timer,
+    getTimer,
     startTimer,
     stopTimer,
   };
