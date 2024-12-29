@@ -1,73 +1,69 @@
-import { getContinents, getCountries } from "@/ressources/countryUtils";
-import { ContinentCode, Country, CountryCode } from "@/ressources/types";
-import { clsx, type ClassValue } from "clsx";
-import _ from "lodash";
-import { twMerge } from "tailwind-merge";
+import { getContinents, getCountries } from '@/ressources/countryUtils';
+import { ContinentCode, Country, CountryCode } from '@/ressources/types';
+import { clsx, type ClassValue } from 'clsx';
+import _ from 'lodash';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+	return twMerge(clsx(inputs));
 }
 
 export function formatTimer(timer?: number): string {
-  if (!timer) return "0:00";
-  const minutes = Math.floor(timer / 60);
-  const seconds = timer % 60;
+	if (!timer) return '0:00';
+	const minutes = Math.floor(timer / 60);
+	const seconds = timer % 60;
 
-  return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+	return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 }
 
 export function getRegionFromURL(region?: string): string | undefined {
-  return region?.split("_").join(" ");
+	return region?.split('_').join(' ');
 }
 
 export function getURLFromRegion(region?: string): string | undefined {
-  return region
-    ?.replace(/(?<=[a-zA-Z0-9])([A-Z])/g, "_$1")
-    .split(" ")
-    .join("_")
-    .toLowerCase();
+	return region
+		?.replace(/(?<=[a-zA-Z0-9])([A-Z])/g, '_$1')
+		.split(' ')
+		.join('_')
+		.toLowerCase();
 }
 
-export const isParamMatchAnyContinent = (
-  params?: string,
-): ContinentCode | undefined => {
-  if (!params) return undefined;
-  const continents = getContinents();
+export const isParamMatchAnyContinent = (params?: string): ContinentCode | undefined => {
+	if (!params) return undefined;
+	const continents = getContinents();
 
-  const continent = getRegionFromURL(params);
+	const continent = getRegionFromURL(params);
 
-  const continentMatch = _.find(continents, (value) =>
-    _.includes(continent, value.name.toLowerCase()),
-  );
+	const continentMatch = _.find(continents, (value) => _.includes(continent, value.name.toLowerCase()));
 
-  return continentMatch?.code;
+	return continentMatch?.code;
 };
 
 export function getUNMembersCountries(): Country[] {
-  return getCountries().filter((country) => country.UNMember);
+	return getCountries().filter((country) => country.UNMember);
 }
 
 export function getCountryByCode(code: CountryCode): Country | undefined {
-  return getCountries().find((country) => country.cca3 === code);
+	return getCountries().find((country) => country.cca3 === code);
 }
 
 export const getContinentByCode = (code?: ContinentCode) => {
-  if (!code) return undefined;
-  return getContinents().find((continent) => continent.code === code);
+	if (!code) return undefined;
+	return getContinents().find((continent) => continent.code === code);
 };
 
 type ContinentCoordinates = {
-  [key in ContinentCode]: { latitude: number; longitude: number };
+	[key in ContinentCode]: { latitude: number; longitude: number };
 };
 
 export const continentCoordinates: ContinentCoordinates = {
-  AF: { latitude: 7.5, longitude: 20.0 }, // Afrique
-  NA: { latitude: 40.0, longitude: -100.0 }, // Amérique du Nord
-  SA: { latitude: -15.0, longitude: -60.0 }, // Amérique du Sud
-  AS: { latitude: 31.0, longitude: 90.0 }, // Asie
-  EU: { latitude: 54.0, longitude: 25.0 }, // Europe
-  OC: { latitude: -25.0, longitude: 135.0 }, // Océanie
-  AN: { latitude: -85.0, longitude: 0.0 }, // Antarctique
+	AF: { latitude: 7.5, longitude: 20.0 }, // Afrique
+	NA: { latitude: 40.0, longitude: -100.0 }, // Amérique du Nord
+	SA: { latitude: -15.0, longitude: -60.0 }, // Amérique du Sud
+	AS: { latitude: 31.0, longitude: 90.0 }, // Asie
+	EU: { latitude: 54.0, longitude: 25.0 }, // Europe
+	OC: { latitude: -25.0, longitude: 135.0 }, // Océanie
+	AN: { latitude: -85.0, longitude: 0.0 }, // Antarctique
 };
 
 // type SubregionCoordinates = {

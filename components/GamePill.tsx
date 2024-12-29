@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useGameState } from "@/contexts/GameContext";
 import { Clock } from "lucide-react";
@@ -10,12 +10,12 @@ export const GamePill = () => {
     useGameState();
   const [displayTime, setDisplayTime] = useState(0);
 
-  const isLoaded = gameState === "loaded";
-  const isPlaying = gameState === "playing" && askedCountry;
+	const isLoaded = gameState === 'loaded';
+	const isPlaying = gameState === 'playing' && askedCountry;
 
-  const handleClick = () => {
-    if (isLoaded) startGame();
-  };
+	const handleClick = () => {
+		if (isLoaded) startGame();
+	};
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -44,38 +44,35 @@ export const GamePill = () => {
     </div>
   );
 
-  const StartButton = () => (
-    <div className={pillClasses} onClick={handleClick}>
-      <span className="text-2xl">Start</span>
-    </div>
-  );
+	const StartButton = () => (
+		<div className={pillClasses} onClick={handleClick}>
+			<span className="text-2xl">Start</span>
+		</div>
+	);
 
-  const basePillClasses =
-    "flex justify-center rounded-full border backdrop-blur-sm px-8 sm:py-3 py-1";
-  const errorPillClasses =
-    "bg-destructive text-destructive-foreground border-red";
-  const successPillClasses = "bg-success text-success-foreground border-green";
-  const defaultPillClasses =
-    "bg-input/[0.8] dark:bg-background/[0.8] border-primary";
-  const startButtonClasses =
-    "cursor-pointer hover:bg-primary hover:dark:bg-secondary hover:text-primary-foreground transition-colors duration-200 ease-in-out";
+	const basePillClasses = 'flex justify-center rounded-full border backdrop-blur-sm px-8 sm:py-3 py-1';
+	const errorPillClasses = 'bg-destructive text-destructive-foreground border-red';
+	const successPillClasses = 'bg-success text-success-foreground border-green';
+	const defaultPillClasses = 'bg-input/[0.8] dark:bg-background/[0.8] border-primary';
+	const startButtonClasses =
+		'cursor-pointer hover:bg-primary hover:dark:bg-secondary hover:text-primary-foreground transition-colors duration-200 ease-in-out';
 
-  const pillClasses = `${basePillClasses} ${questionStatus === "incorrect" ? errorPillClasses : questionStatus === "correct" ? successPillClasses : defaultPillClasses} ${isLoaded ? startButtonClasses : ""}`;
+	const pillClasses = `${basePillClasses} ${questionStatus === 'incorrect' ? errorPillClasses : questionStatus === 'correct' ? successPillClasses : defaultPillClasses} ${isLoaded ? startButtonClasses : ''}`;
 
-  return (
-    <div className="fixed top-8 w-fit z-50 flex gap-4">
-      {isLoaded && <StartButton />}
-      {isPlaying && (
-        <>
-          <div className={pillClasses}>
-            <div className="flex flex-col justify-center items-center">
-              <span className="text-2xl">{askedCountry.name.common}</span>
-              <MobileTimer />
-            </div>
-          </div>
-          {isPlaying && <DesktopTimer />}
-        </>
-      )}
-    </div>
-  );
+	return (
+		<div className="fixed top-8 w-fit z-50 flex gap-4">
+			{isLoaded && <StartButton />}
+			{isPlaying && (
+				<>
+					<div className={pillClasses}>
+						<div className="flex flex-col justify-center items-center">
+							<span className="text-2xl">{askedCountry.name.common}</span>
+							<MobileTimer />
+						</div>
+					</div>
+					{isPlaying && <DesktopTimer />}
+				</>
+			)}
+		</div>
+	);
 };

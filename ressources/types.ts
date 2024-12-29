@@ -1,61 +1,47 @@
 export interface Country {
-  name: {
-    common: string;
-    official: string;
-    native: {
-      common: string;
-      official: string;
-    };
-  };
-  tld: string[];
-  cca2: string;
-  ccn3: string;
-  cca3: CountryCode;
-  currency: string[];
-  callingCode: string[];
-  capital: string;
-  altSpellings: string[];
-  relevance: string;
-  subregion: string;
-  nativeLanguage: LanguageCode;
-  languages: Record<LanguageCode, string>;
-  translations: Record<LanguageCode, string>;
-  latlng: [number, number];
-  demonym: string;
-  borders: CountryCode[];
-  area: number;
-  UNMember: boolean;
-  am5: {
-    name: string;
-    continent: string;
-    continentCode: ContinentCode;
-    maps: string[];
-  };
+	name: {
+		common: string;
+		official: string;
+		native: {
+			common: string;
+			official: string;
+		};
+	};
+	tld: string[];
+	cca2: string;
+	ccn3: string;
+	cca3: CountryCode;
+	currency: string[];
+	callingCode: string[];
+	capital: string;
+	altSpellings: string[];
+	relevance: string;
+	subregion: string;
+	nativeLanguage: LanguageCode;
+	languages: Record<LanguageCode, string>;
+	translations: Record<LanguageCode, string>;
+	latlng: [number, number];
+	demonym: string;
+	borders: CountryCode[];
+	area: number;
+	UNMember: boolean;
+	am5: {
+		name: string;
+		continent: string;
+		continentCode: ContinentCode;
+		maps: string[];
+	};
 }
 
 export interface Continent {
-  name: ContinentName;
-  code: ContinentCode;
-  am5Id: Am5ContinentId;
+	name: ContinentName;
+	code: ContinentCode;
+	am5Id: Am5ContinentId;
 }
 
-export type ContinentName =
-  | "Africa"
-  | "Asia"
-  | "Europe"
-  | "North America"
-  | "Oceania"
-  | "South America"
-  | "Antarctica";
-export type ContinentCode = "AF" | "NA" | "SA" | "AS" | "EU" | "OC" | "AN";
-export type Am5ContinentId =
-  | "africa"
-  | "asia"
-  | "europe"
-  | "northAmerica"
-  | "oceania"
-  | "southAmerica"
-  | "antarctica";
+export type ContinentName = 'Africa' | 'Asia' | 'Europe' | 'North America' | 'Oceania' | 'South America' | 'Antarctica';
+export type ContinentCode = 'AF' | 'NA' | 'SA' | 'AS' | 'EU' | 'OC' | 'AN';
+export type Am5ContinentId = 'africa' | 'asia' | 'europe' | 'northAmerica' | 'oceania' | 'southAmerica' | 'antarctica';
 
 export type CountryCode = string;
 export type LanguageCode = string;

@@ -4,14 +4,14 @@ Cartomania is a personal project designed for anyone who wants to learn and test
 
 ## Features
 
-- **Flags**: Learn and recognize world flags.  
-- **Capitals** *(coming soon)*: Test your knowledge of world capitals.  
-- **Country locations** *(coming soon)*: Identify countries on the map.  
+- **Flags**: Learn and recognize world flags.
+- **Capitals** _(coming soon)_: Test your knowledge of world capitals.
+- **Country locations** _(coming soon)_: Identify countries on the map.
 
 ## Stack
 
-- Next.js / shadcn/ui  
-- Prisma / AuthJS / postgreSQL 
+- Next.js / shadcn/ui
+- Prisma / AuthJS / postgreSQL
 
 ## Live Demo
 
@@ -20,9 +20,9 @@ Check out Cartomania here:
 
 ## Data Sources
 
-- **Maps**: [amCharts 5 Maps](https://www.amcharts.com/javascript-maps/)  
-- **Geographic data**: [RESTCountries API](https://github.com/hengkiardo/restcountries)  
-- **Flags**: [flagCDN](https://flagcdn.com/)  
+- **Maps**: [amCharts 5 Maps](https://www.amcharts.com/javascript-maps/)
+- **Geographic data**: [RESTCountries API](https://github.com/hengkiardo/restcountries)
+- **Flags**: [flagCDN](https://flagcdn.com/)
 
 ## Contributing
 
