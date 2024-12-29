@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.7161,
+              17.0368
+            ],
+            [
+              -61.8597,
+              17.0133
+            ],
+            [
+              -61.8173,
+              17.1691
+            ],
+            [
+              -61.7161,
+              17.0368
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Antigua and Barbuda",
+        "id": "AG"
+      },
+      "id": "AG"
+    }
+  ]
+}

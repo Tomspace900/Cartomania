@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              145.7519,
+              15.1334
+            ],
+            [
+              145.6845,
+              15.1249
+            ],
+            [
+              145.7133,
+              15.2155
+            ],
+            [
+              145.7821,
+              15.1747
+            ],
+            [
+              145.7519,
+              15.1334
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Northern Mariana Islands",
+        "id": "MP"
+      },
+      "id": "MP"
+    }
+  ]
+}

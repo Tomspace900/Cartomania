@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.0186,
+              49.2312
+            ],
+            [
+              -2.2359,
+              49.1763
+            ],
+            [
+              -2.2206,
+              49.2665
+            ],
+            [
+              -2.0186,
+              49.2312
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Jersey",
+        "id": "JE"
+      },
+      "id": "JE"
+    }
+  ]
+}

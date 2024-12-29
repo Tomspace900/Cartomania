@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -64.7656,
+              17.7945
+            ],
+            [
+              -64.6862,
+              17.7062
+            ],
+            [
+              -64.889,
+              17.7017
+            ],
+            [
+              -64.8848,
+              17.7723
+            ],
+            [
+              -64.7656,
+              17.7945
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "US Virgin Islands",
+        "id": "VI"
+      },
+      "id": "VI"
+    }
+  ]
+}

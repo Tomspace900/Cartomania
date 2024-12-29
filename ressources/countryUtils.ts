@@ -1,42 +1,118 @@
-import { continents } from './continents';
-import { countries } from './countries';
-import { Continent, Country } from './types';
+import continents from './continents.json';
+import { Continent, ContinentCode, Country, CountryCode } from './types';
 
-// ! Ça c'est deg mais on va faire ça proprement côté serveur api
-export const getCountries = (): Country[] => countries;
+export const getCountries = async () =>
+	fetch('/api/data/country').then((res) => {
+		const countries = res.json();
+		if (!countries) return [];
+		return countries as Promise<Country[]>;
+	});
 
-// ! Ça c'est deg mais on va faire ça proprement côté serveur api
-export const getContinents = (): Continent[] => continents;
+// export const getContinents = async () =>
+// 	fetch('/api/data/continent').then((res) => {
+// 		const continents = res.json();
+// 		if (!continents) return [];
+// 		return continents as Promise<Continent[]>;
+// 	});
 
-export const loadGeodata = async (path: string, detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
-	const script = document.createElement('script');
-	const res = detailed ? 'High' : 'Low';
+// ! Pour l'instant les continents on va les garder en front
+export const getContinents = () => continents as unknown as Continent[];
+
+export const getUNMembersCountries = (): Promise<Country[]> =>
+	getCountries().then((res) => res.filter((country) => country.UNMember));
+
+export const getCountryByCode = (code: CountryCode): Promise<Country | undefined> =>
+	getCountries().then((res) => res.find((country) => country.cca3 === code));
+
+export const getContinentByCode = (code?: ContinentCode, continents?: Continent[]) => {
+	if (!code) return undefined;
+	const allContinents = continents || getContinents();
+	return allContinents.find((continent) => continent.code === code);
+};
+
+export const loadCountryGeodata = async (
+	cca2: CountryCode | ContinentCode,
+	detailed: boolean = false,
+	extended: boolean = false
+): Promise<GeoJSON.FeatureCollection> => {
+	const resolution = detailed ? 'high' : 'low';
 
 	try {
-		script.src = `https://www.amcharts.com/lib/5/geodata/${path}${res}.js`;
-		script.async = true;
+		const response = await fetch(`/api/geodata/country/${cca2}?resolution=${resolution}${extended ? '&extended=true' : ''}`);
 
-		const data = new Promise<GeoJSON.FeatureCollection>((resolve, reject) => {
-			script.onload = () => {
-				const geoData =
-					// @ts-expect-error: Accessing global variable
-					window[`am5geodata_${path.replaceAll('/', '_')}${res}`];
-				if (geoData) {
-					console.log('loadGeodata', geoData);
-					resolve(geoData);
-				} else {
-					reject(new Error(`No data found for ${path}`));
-				}
-			};
-			script.onerror = () => {
-				reject(new Error(`Failed to load script: ${script.src}`));
-			};
-		});
+		if (!response.ok) {
+			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
+		}
 
-		document.body.appendChild(script);
-		return await data;
-	} finally {
-		// Clean up script if needed
-		document.body.removeChild(script);
+		const geoData: GeoJSON.FeatureCollection = await response.json();
+
+		return geoData;
+	} catch (error) {
+		console.error(`Error loading geodata for ${cca2}`, error);
+		throw error;
 	}
 };
+
+export const loadContinentGeodata = async (
+	code: ContinentCode,
+	detailed: boolean = false
+): Promise<GeoJSON.FeatureCollection> => {
+	const resolution = detailed ? 'high' : 'low';
+
+	if (!code) {
+		throw new Error('Invalid continent code');
+	}
+
+	try {
+		const response = await fetch(`/api/geodata/continent/${code}?resolution=${resolution}`);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
+		}
+
+		const geoData: GeoJSON.FeatureCollection = await response.json();
+
+		return geoData;
+	} catch (error) {
+		console.error(`Error loading geodata for continent ${code}`, error);
+		throw error;
+	}
+};
+
+export const loadWorldGeodata = async (detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
+	const resolution = detailed ? 'high' : 'low';
+
+	try {
+		const response = await fetch(`/api/geodata/world?resolution=${resolution}`);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
+		}
+
+		const geoData: GeoJSON.FeatureCollection = await response.json();
+
+		return geoData;
+	} catch (error) {
+		console.error('Error loading geodata for world', error);
+		throw error;
+	}
+};
+
+// export const loadAm5Geodata = async (path: string, detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
+// 	const res = detailed ? 'High' : 'Low';
+
+// 	try {
+// 		const response = await fetch(`https://www.amcharts.com/lib/5/geodata/json/${path}${res}.json`);
+
+// 		if (!response.ok) {
+// 			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
+// 		}
+
+// 		const geoData: GeoJSON.FeatureCollection = await response.json();
+
+// 		return geoData;
+// 	} catch (error) {
+// 		console.error(`Error loading geodata for ${path}`, error);
+// 		throw error;
+// 	}
+// };

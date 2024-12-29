@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -37.1034,
+              -54.0658
+            ],
+            [
+              -36.3264,
+              -54.2509
+            ],
+            [
+              -35.7986,
+              -54.7636
+            ],
+            [
+              -36.0855,
+              -54.8666
+            ],
+            [
+              -37.1034,
+              -54.0658
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "South Georgia and South Sandwich Islands",
+        "id": "GS"
+      },
+      "id": "GS"
+    }
+  ]
+}

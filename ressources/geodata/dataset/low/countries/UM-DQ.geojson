@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -160.0213,
+              -0.398
+            ],
+            [
+              -160.0453,
+              -0.3802
+            ],
+            [
+              -160.0178,
+              -0.3744
+            ],
+            [
+              -160.0213,
+              -0.398
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Jarvis Island",
+        "id": "UM-DQ"
+      },
+      "id": "UM-DQ"
+    }
+  ]
+}

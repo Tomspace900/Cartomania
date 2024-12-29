@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -62.6307,
+              17.2401
+            ],
+            [
+              -62.8389,
+              17.3391
+            ],
+            [
+              -62.7945,
+              17.4025
+            ],
+            [
+              -62.7137,
+              17.3533
+            ],
+            [
+              -62.6307,
+              17.2401
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Kitts and Nevis",
+        "id": "KN"
+      },
+      "id": "KN"
+    }
+  ]
+}

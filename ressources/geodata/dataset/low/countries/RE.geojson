@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              55.7972,
+              -21.3395
+            ],
+            [
+              55.3627,
+              -21.2738
+            ],
+            [
+              55.3112,
+              -20.904
+            ],
+            [
+              55.6618,
+              -20.9062
+            ],
+            [
+              55.7972,
+              -21.3395
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Reunion",
+        "id": "RE"
+      },
+      "id": "RE"
+    }
+  ]
+}

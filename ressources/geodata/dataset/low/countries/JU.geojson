@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              42.7579,
+              -17.075
+            ],
+            [
+              42.7415,
+              -17.0741
+            ],
+            [
+              42.7379,
+              -17.0519
+            ],
+            [
+              42.761,
+              -17.0652
+            ],
+            [
+              42.7579,
+              -17.075
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Juan De Nova Island",
+        "id": "JU"
+      },
+      "id": "JU"
+    }
+  ]
+}

@@ -15,8 +15,8 @@ interface IMapProps {
 	zoom?: number;
 	enableZoom?: boolean;
 	enablePan?: boolean;
-	handleClick?: (event: any) => void;
-	handleHover?: (event: any) => void;
+	handleClick?: (event: am5.ISpritePointerEvent) => void;
+	handleHover?: (event: am5.ISpritePointerEvent) => void;
 	highlightedPolygonId?: string;
 }
 
@@ -185,7 +185,7 @@ const Map = ({
 			};
 			root.dispose();
 		};
-	}, [rotateTo, center, zoom]);
+	}, [name, type, geoData, animate, center, rotateTo, zoom, enableZoom, enablePan, handleClick, handleHover, isClickable]);
 
 	// Méthode pour centrer la carte sur des coordonnées spécifiques
 	const centerOn = (longitude: number, latitude: number) => {

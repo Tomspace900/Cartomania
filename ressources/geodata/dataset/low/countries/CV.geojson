@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -23.4442,
+              15.0078
+            ],
+            [
+              -23.7054,
+              14.9611
+            ],
+            [
+              -23.7007,
+              15.2714
+            ],
+            [
+              -23.4442,
+              15.0078
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Cape Verde",
+        "id": "CV"
+      },
+      "id": "CV"
+    }
+  ]
+}

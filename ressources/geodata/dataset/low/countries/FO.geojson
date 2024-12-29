@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.6311,
+              62.2279
+            ],
+            [
+              -7.0135,
+              62.094
+            ],
+            [
+              -7.1722,
+              62.2856
+            ],
+            [
+              -6.6311,
+              62.2279
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Faroe Islands",
+        "id": "FO"
+      },
+      "id": "FO"
+    }
+  ]
+}

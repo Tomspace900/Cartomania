@@ -18,7 +18,7 @@ enum GameMode {
 const Game = () => {
 	const params = useParams<{ region: string; mode?: string[] }>();
 	const router = useRouter();
-	const [validMode, setValidMode] = useState(false);
+	const [validMode, setValidMode] = useState<GameMode | undefined>(undefined);
 
 	const clearUrl = (mode?: string) => router.push(`/game/${params.region}/${mode || 'default'}`);
 
@@ -26,7 +26,7 @@ const Game = () => {
 		if (!params.mode) clearUrl();
 		else if (!Object.values(GameMode).includes(params.mode[0] as GameMode)) clearUrl();
 		else if (params.mode.length > 1) clearUrl(params.mode[0]);
-		else setValidMode(true);
+		else setValidMode(params.mode[0] as GameMode);
 	}, [params, router]);
 
 	const continentCode = isParamMatchAnyContinent(params.region);
@@ -34,7 +34,7 @@ const Game = () => {
 
 	const gameParams: GameParams = {
 		continentCode,
-		UNMembersOnly: true,
+		UNMembersOnly: validMode === GameMode.FLAGS, // ! permettre vrai seulement sur les drapeaux pas les cartes
 	};
 
 	useEffect(() => {

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              171.1017,
+              7.1384
+            ],
+            [
+              171.2269,
+              7.0869
+            ],
+            [
+              171.2025,
+              7.0736
+            ],
+            [
+              171.0955,
+              7.1091
+            ],
+            [
+              171.1017,
+              7.1384
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Marshall Islands",
+        "id": "MH"
+      },
+      "id": "MH"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -149.3215,
+              -17.6902
+            ],
+            [
+              -149.579,
+              -17.7351
+            ],
+            [
+              -149.6114,
+              -17.5318
+            ],
+            [
+              -149.3792,
+              -17.5224
+            ],
+            [
+              -149.3215,
+              -17.6902
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "French Polynesia",
+        "id": "PF"
+      },
+      "id": "PF"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              158.315,
+              6.8135
+            ],
+            [
+              158.1836,
+              6.8011
+            ],
+            [
+              158.1348,
+              6.9449
+            ],
+            [
+              158.2946,
+              6.9511
+            ],
+            [
+              158.315,
+              6.8135
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Federated States of Micronesia",
+        "id": "FM"
+      },
+      "id": "FM"
+    }
+  ]
+}

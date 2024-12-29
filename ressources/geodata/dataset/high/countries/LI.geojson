@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.5801,
+              47.0572
+            ],
+            [
+              9.4877,
+              47.0621
+            ],
+            [
+              9.5277,
+              47.2707
+            ],
+            [
+              9.5801,
+              47.0572
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Liechtenstein",
+        "id": "LI"
+      },
+      "id": "LI"
+    }
+  ]
+}

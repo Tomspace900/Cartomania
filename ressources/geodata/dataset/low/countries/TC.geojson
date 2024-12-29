@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -71.6615,
+              21.7651
+            ],
+            [
+              -71.8304,
+              21.7904
+            ],
+            [
+              -71.8062,
+              21.8521
+            ],
+            [
+              -71.6684,
+              21.8335
+            ],
+            [
+              -71.6615,
+              21.7651
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Turks and Caicos Islands",
+        "id": "TC"
+      },
+      "id": "TC"
+    }
+  ]
+}

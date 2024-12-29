@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              96.8404,
+              -12.182
+            ],
+            [
+              96.835,
+              -12.1797
+            ],
+            [
+              96.8279,
+              -12.1509
+            ],
+            [
+              96.8257,
+              -12.126
+            ],
+            [
+              96.8328,
+              -12.126
+            ],
+            [
+              96.8395,
+              -12.1602
+            ],
+            [
+              96.8404,
+              -12.182
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Cocos (Keeling) Islands",
+        "id": "CC"
+      },
+      "id": "CC"
+    }
+  ]
+}

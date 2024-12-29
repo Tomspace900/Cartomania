@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6.1164,
+              50.1209
+            ],
+            [
+              6.4875,
+              49.7985
+            ],
+            [
+              6.3441,
+              49.4527
+            ],
+            [
+              5.7897,
+              49.5383
+            ],
+            [
+              5.744,
+              49.9196
+            ],
+            [
+              6.1164,
+              50.1209
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Luxembourg",
+        "id": "LU"
+      },
+      "id": "LU"
+    }
+  ]
+}

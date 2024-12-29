@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.4933,
+              13.0822
+            ],
+            [
+              -59.6114,
+              13.1021
+            ],
+            [
+              -59.5916,
+              13.3179
+            ],
+            [
+              -59.4276,
+              13.1527
+            ],
+            [
+              -59.4933,
+              13.0822
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Barbados",
+        "id": "BB"
+      },
+      "id": "BB"
+    }
+  ]
+}

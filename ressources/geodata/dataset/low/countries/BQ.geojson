@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -68.2058,
+              12.1446
+            ],
+            [
+              -68.2873,
+              12.1717
+            ],
+            [
+              -68.3711,
+              12.2574
+            ],
+            [
+              -68.3694,
+              12.3018
+            ],
+            [
+              -68.2196,
+              12.2312
+            ],
+            [
+              -68.2058,
+              12.1446
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bonair, Saint Eustachius and Saba",
+        "id": "BQ"
+      },
+      "id": "BQ"
+    }
+  ]
+}

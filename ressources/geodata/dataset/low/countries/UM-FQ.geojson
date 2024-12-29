@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -176.456,
+              0.2226
+            ],
+            [
+              -176.4615,
+              0.215
+            ],
+            [
+              -176.4675,
+              0.2195
+            ],
+            [
+              -176.456,
+              0.2226
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Baker Island",
+        "id": "UM-FQ"
+      },
+      "id": "UM-FQ"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -62.1484,
+              16.7403
+            ],
+            [
+              -62.1542,
+              16.6812
+            ],
+            [
+              -62.2217,
+              16.6994
+            ],
+            [
+              -62.223,
+              16.7518
+            ],
+            [
+              -62.1484,
+              16.7403
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Montserrat",
+        "id": "MS"
+      },
+      "id": "MS"
+    }
+  ]
+}

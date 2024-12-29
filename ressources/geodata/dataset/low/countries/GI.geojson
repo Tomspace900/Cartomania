@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.3345,
+              36.1623
+            ],
+            [
+              -5.3382,
+              36.1122
+            ],
+            [
+              -5.3562,
+              36.1264
+            ],
+            [
+              -5.3551,
+              36.1455
+            ],
+            [
+              -5.3345,
+              36.1623
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Gibraltar",
+        "id": "GI"
+      },
+      "id": "GI"
+    }
+  ]
+}

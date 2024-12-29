@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7074,
+              -53.1372
+            ],
+            [
+              73.465,
+              -53.1843
+            ],
+            [
+              73.3363,
+              -53.0298
+            ],
+            [
+              73.5858,
+              -53.0271
+            ],
+            [
+              73.7074,
+              -53.1372
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Heard Island and McDonald Islands",
+        "id": "HM"
+      },
+      "id": "HM"
+    }
+  ]
+}

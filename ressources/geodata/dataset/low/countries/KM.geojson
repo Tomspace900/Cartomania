@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              43.4659,
+              -11.9014
+            ],
+            [
+              43.2266,
+              -11.7518
+            ],
+            [
+              43.3793,
+              -11.6142
+            ],
+            [
+              43.4659,
+              -11.9014
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Comoros",
+        "id": "KM"
+      },
+      "id": "KM"
+    }
+  ]
+}

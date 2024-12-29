@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.4121,
+              54.1854
+            ],
+            [
+              -4.7457,
+              54.1189
+            ],
+            [
+              -4.5086,
+              54.3768
+            ],
+            [
+              -4.4121,
+              54.1854
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Isle of Man",
+        "id": "IM"
+      },
+      "id": "IM"
+    }
+  ]
+}

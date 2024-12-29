@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              134.5956,
+              7.3821
+            ],
+            [
+              134.5064,
+              7.4372
+            ],
+            [
+              134.5561,
+              7.5939
+            ],
+            [
+              134.6595,
+              7.6631
+            ],
+            [
+              134.5956,
+              7.3821
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Palau",
+        "id": "PW"
+      },
+      "id": "PW"
+    }
+  ]
+}

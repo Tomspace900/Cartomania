@@ -25,18 +25,16 @@ export interface Country {
 	borders: CountryCode[];
 	area: number;
 	UNMember: boolean;
-	am5: {
-		name: string;
-		continent: string;
-		continentCode: ContinentCode;
-		maps: string[];
-	};
+	continent: Continent;
 }
 
 export interface Continent {
 	name: ContinentName;
 	code: ContinentCode;
-	am5Id: Am5ContinentId;
+	latLng: {
+		latitude: number;
+		longitude: number;
+	};
 }
 
 export type ContinentName = 'Africa' | 'Asia' | 'Europe' | 'North America' | 'Oceania' | 'South America' | 'Antarctica';
@@ -45,36 +43,3 @@ export type Am5ContinentId = 'africa' | 'asia' | 'europe' | 'northAmerica' | 'oc
 
 export type CountryCode = string;
 export type LanguageCode = string;
-
-// export type Region =
-//   | "Africa"
-//   | "Americas"
-//   | "Asia"
-//   | "Europe"
-//   | "Oceania"
-//   | "Antarctica";
-
-// export type Subregion =
-//   | "Northern Africa"
-//   | "Middle Africa"
-//   | "Western Africa"
-//   | "Southern Africa"
-//   | "Eastern Africa"
-//   | "Northern America"
-//   | "Central America"
-//   | "Caribbean"
-//   | "South America"
-//   | "Central Asia"
-//   | "Eastern Asia"
-//   | "Southern Asia"
-//   | "South-Eastern Asia"
-//   | "Western Asia"
-//   | "Eastern Europe"
-//   | "Northern Europe"
-//   | "Southern Europe"
-//   | "Western Europe"
-//   | "Australia and New Zealand"
-//   | "Melanesia"
-//   | "Micronesia"
-//   | "Polynesia"
-//   | "Antarctica";

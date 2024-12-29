@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -169.8034,
+              -19.0832
+            ],
+            [
+              -169.9039,
+              -19.1378
+            ],
+            [
+              -169.9483,
+              -19.0729
+            ],
+            [
+              -169.834,
+              -18.966
+            ],
+            [
+              -169.8034,
+              -19.0832
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Niue",
+        "id": "NU"
+      },
+      "id": "NU"
+    }
+  ]
+}

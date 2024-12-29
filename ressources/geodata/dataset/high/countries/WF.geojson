@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -178.0467,
+              -14.3184
+            ],
+            [
+              -178.1585,
+              -14.3118
+            ],
+            [
+              -178.1423,
+              -14.2425
+            ],
+            [
+              -178.0467,
+              -14.3184
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Wallis and Futuna",
+        "id": "WF"
+      },
+      "id": "WF"
+    }
+  ]
+}

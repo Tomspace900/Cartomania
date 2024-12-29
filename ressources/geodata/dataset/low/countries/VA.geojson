@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.4392,
+              41.8983
+            ],
+            [
+              12.4307,
+              41.8974
+            ],
+            [
+              12.4307,
+              41.9054
+            ],
+            [
+              12.4383,
+              41.9063
+            ],
+            [
+              12.4392,
+              41.8983
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Vatican City",
+        "id": "VA"
+      },
+      "id": "VA"
+    }
+  ]
+}

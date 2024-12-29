@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.7253,
+              -10.493
+            ],
+            [
+              105.6969,
+              -10.564
+            ],
+            [
+              105.5842,
+              -10.5125
+            ],
+            [
+              105.7053,
+              -10.4308
+            ],
+            [
+              105.7253,
+              -10.493
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Christmas Island",
+        "id": "CX"
+      },
+      "id": "CX"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              167.9394,
+              -29.0175
+            ],
+            [
+              167.979,
+              -29.0756
+            ],
+            [
+              167.9204,
+              -29.0827
+            ],
+            [
+              167.9394,
+              -29.0175
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Norfolk Island",
+        "id": "NF"
+      },
+      "id": "NF"
+    }
+  ]
+}

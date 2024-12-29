@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -169.5237,
+              16.7305
+            ],
+            [
+              -169.5388,
+              16.7243
+            ],
+            [
+              -169.5388,
+              16.7296
+            ],
+            [
+              -169.5237,
+              16.7305
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Johnston Atoll",
+        "id": "UM-JQ"
+      },
+      "id": "UM-JQ"
+    }
+  ]
+}

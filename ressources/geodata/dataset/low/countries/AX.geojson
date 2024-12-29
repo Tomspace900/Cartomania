@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.9893,
+              60.3511
+            ],
+            [
+              20.2588,
+              60.2612
+            ],
+            [
+              19.7461,
+              60.099
+            ],
+            [
+              19.6871,
+              60.2677
+            ],
+            [
+              19.9893,
+              60.3511
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Aland Islands",
+        "id": "AX"
+      },
+      "id": "AX"
+    }
+  ]
+}

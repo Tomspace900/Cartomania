@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -172.3335,
+              -13.4653
+            ],
+            [
+              -172.225,
+              -13.8044
+            ],
+            [
+              -172.5357,
+              -13.7915
+            ],
+            [
+              -172.7441,
+              -13.5789
+            ],
+            [
+              -172.3335,
+              -13.4653
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Samoa",
+        "id": "WS"
+      },
+      "id": "WS"
+    }
+  ]
+}

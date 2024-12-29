@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              69.185,
+              -49.1093
+            ],
+            [
+              69.9157,
+              -49.3486
+            ],
+            [
+              69.6129,
+              -49.6509
+            ],
+            [
+              68.8721,
+              -49.4445
+            ],
+            [
+              69.185,
+              -49.1093
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "French Southern and Antarctic Lands",
+        "id": "TF"
+      },
+      "id": "TF"
+    }
+  ]
+}

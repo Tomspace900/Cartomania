@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.1745,
+              13.1581
+            ],
+            [
+              -61.2773,
+              13.2095
+            ],
+            [
+              -61.1821,
+              13.356
+            ],
+            [
+              -61.1239,
+              13.2939
+            ],
+            [
+              -61.1745,
+              13.1581
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Vincent and the Grenadines",
+        "id": "VC"
+      },
+      "id": "VC"
+    }
+  ]
+}

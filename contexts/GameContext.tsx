@@ -3,8 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { ContinentCode, Country } from '@/ressources/types';
 import _ from 'lodash';
-import { getCountries } from '@/ressources/countryUtils';
-import { getUNMembersCountries } from '@/lib/utils';
+import { getCountries, getUNMembersCountries } from '@/ressources/countryUtils';
 import { useTimer } from '@/hooks/use-timer';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
@@ -69,29 +68,32 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 
 	const initGame = ({ continentCode, UNMembersOnly }: GameParams) => {
 		setGameState('loading');
-		const countries = UNMembersOnly ? getUNMembersCountries() : getCountries();
 
-		const filteredCountries = continentCode
-			? countries.filter((country) => country.am5.continentCode === continentCode)
-			: countries;
+		const countriesToFecth = UNMembersOnly ? getUNMembersCountries() : getCountries();
 
-		const shuffledCountries: Country[] = _.shuffle(filteredCountries);
-		const shuffledGameCountries: GameCountry[] = shuffledCountries.map((country) => ({
-			...country,
-			disabled: false,
-		}));
+		countriesToFecth.then((countries) => {
+			const filteredCountries = continentCode
+				? countries.filter((country) => country.continent.code === continentCode)
+				: countries;
 
-		if (shuffledGameCountries.length === 0) {
-			setGameState('error');
-			return;
-		}
+			const shuffledCountries: Country[] = _.shuffle(filteredCountries);
+			const shuffledGameCountries: GameCountry[] = shuffledCountries.map((country) => ({
+				...country,
+				disabled: false,
+			}));
 
-		setErrorCount(0);
-		setTotalErrorCount(0);
-		setGameRegion(continentCode);
-		setGameCountries(shuffledGameCountries);
-		setAskedCountry(getRandomCountry(shuffledGameCountries));
-		setGameState('loaded');
+			if (shuffledGameCountries.length === 0) {
+				setGameState('error');
+				return;
+			}
+
+			setErrorCount(0);
+			setTotalErrorCount(0);
+			setGameRegion(continentCode);
+			setGameCountries(shuffledGameCountries);
+			setAskedCountry(getRandomCountry(shuffledGameCountries));
+			setGameState('loaded');
+		});
 	};
 
 	const startGame = () => {

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.5663,
+              35.8529
+            ],
+            [
+              14.4363,
+              35.8219
+            ],
+            [
+              14.3524,
+              35.8725
+            ],
+            [
+              14.4482,
+              35.9572
+            ],
+            [
+              14.5663,
+              35.8529
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Malta",
+        "id": "MT"
+      },
+      "id": "MT"
+    }
+  ]
+}

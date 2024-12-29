@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.5121,
+              4.1644
+            ],
+            [
+              73.473,
+              4.1706
+            ],
+            [
+              73.5041,
+              4.2345
+            ],
+            [
+              73.5285,
+              4.2434
+            ],
+            [
+              73.5121,
+              4.1644
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Maldives",
+        "id": "MV"
+      },
+      "id": "MV"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.0154,
+              22.5117
+            ],
+            [
+              114.1229,
+              22.565
+            ],
+            [
+              114.2658,
+              22.541
+            ],
+            [
+              114.268,
+              22.2956
+            ],
+            [
+              113.8965,
+              22.4283
+            ],
+            [
+              114.0154,
+              22.5117
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Hong Kong",
+        "id": "HK"
+      },
+      "id": "HK"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -62.832,
+              17.8766
+            ],
+            [
+              -62.8655,
+              17.9184
+            ],
+            [
+              -62.7996,
+              17.9086
+            ],
+            [
+              -62.832,
+              17.8766
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Barthelemy",
+        "id": "BL"
+      },
+      "id": "BL"
+    }
+  ]
+}

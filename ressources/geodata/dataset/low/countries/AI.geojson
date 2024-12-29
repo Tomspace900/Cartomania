@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -63.0012,
+              18.222
+            ],
+            [
+              -63.1534,
+              18.2002
+            ],
+            [
+              -63.026,
+              18.2699
+            ],
+            [
+              -63.0012,
+              18.222
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Anguilla",
+        "id": "AI"
+      },
+      "id": "AI"
+    }
+  ]
+}

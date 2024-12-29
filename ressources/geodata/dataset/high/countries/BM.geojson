@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -64.7303,
+              32.2934
+            ],
+            [
+              -64.8202,
+              32.2596
+            ],
+            [
+              -64.6946,
+              32.387
+            ],
+            [
+              -64.7303,
+              32.2934
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bermuda",
+        "id": "BM"
+      },
+      "id": "BM"
+    }
+  ]
+}

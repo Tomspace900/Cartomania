@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -175.162,
+              -21.1695
+            ],
+            [
+              -175.1567,
+              -21.2636
+            ],
+            [
+              -175.3354,
+              -21.1579
+            ],
+            [
+              -175.2255,
+              -21.1188
+            ],
+            [
+              -175.162,
+              -21.1695
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Tonga",
+        "id": "TO"
+      },
+      "id": "TO"
+    }
+  ]
+}

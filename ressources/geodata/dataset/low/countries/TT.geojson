@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.0121,
+              10.1343
+            ],
+            [
+              -61.5967,
+              10.0646
+            ],
+            [
+              -61.4648,
+              10.5391
+            ],
+            [
+              -61.0338,
+              10.67
+            ],
+            [
+              -61.0121,
+              10.1343
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Trinidad and Tobago",
+        "id": "TT"
+      },
+      "id": "TT"
+    }
+  ]
+}

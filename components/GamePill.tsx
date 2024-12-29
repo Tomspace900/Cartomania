@@ -9,6 +9,14 @@ export const GamePill = () => {
 	const { askedCountry, questionStatus, getTimer, gameState, startGame } = useGameState();
 	const [displayTime, setDisplayTime] = useState(0);
 
+	useEffect(() => {
+		const updateInterval = setInterval(() => {
+			setDisplayTime(getTimer());
+		}, 1000);
+
+		return () => clearInterval(updateInterval);
+	}, [getTimer]);
+
 	const isLoaded = gameState === 'loaded';
 	const isPlaying = gameState === 'playing' && askedCountry;
 
@@ -18,7 +26,6 @@ export const GamePill = () => {
 
 	useEffect(() => {
 		const updateInterval = setInterval(() => {
-			console.log('updateInterval', getTimer());
 			setDisplayTime(getTimer());
 		}, 1000);
 

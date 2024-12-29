@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -56.2671,
+              46.8384
+            ],
+            [
+              -56.3869,
+              47.0679
+            ],
+            [
+              -56.2873,
+              47.071
+            ],
+            [
+              -56.3148,
+              46.9538
+            ],
+            [
+              -56.2671,
+              46.8384
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Pierre and Miquelon",
+        "id": "PM"
+      },
+      "id": "PM"
+    }
+  ]
+}

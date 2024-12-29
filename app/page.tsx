@@ -1,59 +1,32 @@
 'use client';
 
-import Map from '@/components/Map';
 import { Button } from '@/components/ui/button';
-import { continentCoordinates, getURLFromRegion } from '@/lib/utils';
-import { getContinents } from '@/ressources/countryUtils';
+import { continentToMapEntity, formatToURL } from '@/lib/utils';
+import { getContinentByCode, getContinents } from '@/ressources/countryUtils';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Continent } from '@/ressources/types';
 import { useRouter } from 'next/navigation';
-import { LoadingState } from '@/lib/types';
-import { loadGeodata } from '@/ressources/countryUtils';
+import MapV2 from '@/components/MapV2';
 
 const isMobile = window.innerWidth < 640;
 
 export default function Home() {
 	const router = useRouter();
 	const continents = getContinents();
-	const [loading, setLoading] = useState<LoadingState>('idle');
-	const [continentsGeoData, setContinentsGeoData] = useState<GeoJSON.GeoJSON>();
 	const [globCoordinates, setGlobCoordinates] = useState<{
 		longitude: number;
 		latitude: number;
 	}>();
 
 	const handleOverLink = (continent: Continent) => {
-		setGlobCoordinates(continentCoordinates[continent.code]);
+		setGlobCoordinates(continent.latLng);
 	};
 
-	const handleGlobClick = (event: any) => {
-		const id = event.target.dataItem?.dataContext?.id;
-		router.push(`game/${getURLFromRegion(id)}/flags`);
+	const handleGlobClick = (continent: Continent) => {
+		const id = continent.code;
+		router.push(`game/${formatToURL(getContinentByCode(id)?.name)}/flags`);
 	};
-
-	const handleGlobHover = useCallback((event: any) => {
-		const type = event.type;
-		if (type === 'pointerover') event.target.setAll({ fillOpacity: 1 });
-		else event.target.setAll({ fillOpacity: 0.7 });
-	}, []);
-
-	useEffect(() => {
-		const fetchGeoData = async () => {
-			setLoading('loading');
-
-			try {
-				const data = await loadGeodata('continents', true);
-				setContinentsGeoData(data);
-				setLoading('done');
-			} catch (error) {
-				console.error(error);
-				setLoading('failed');
-			}
-		};
-
-		fetchGeoData();
-	}, []);
 
 	return (
 		<div className="sm:px-12 px-6 max-w-5xl flex flex-col w-full h-full gap-10">
@@ -71,27 +44,24 @@ export default function Home() {
 							onMouseEnter={() => handleOverLink(continent)}
 							onMouseLeave={() => setGlobCoordinates(undefined)}
 						>
-							<Link href={`/game/${getURLFromRegion(continent.name)}/flags`}>{continent.name}</Link>
+							<Link href={`/game/${formatToURL(continent.name)}/flags`}>{continent.name}</Link>
 						</Button>
 					))}
 				</div>
 			</div>
 
 			<div className="flex items-center min-h-[300px] flex-grow">
-				{loading === 'done' && continentsGeoData && (
-					<div className="w-full h-full max-h-[500px]">
-						<Map
-							type="glob"
-							name="world"
-							geoData={[continentsGeoData]}
-							animate
-							enablePan={isMobile}
-							rotateTo={globCoordinates}
-							handleClick={handleGlobClick}
-							handleHover={handleGlobHover}
-						/>
-					</div>
-				)}
+				<div className="w-full h-full max-h-[500px]">
+					<MapV2
+						type="glob"
+						name="world"
+						entities={continents.map((c) => continentToMapEntity(c))}
+						animate
+						enablePan={isMobile}
+						rotateTo={globCoordinates}
+						handleClick={handleGlobClick}
+					/>
+				</div>
 			</div>
 		</div>
 	);

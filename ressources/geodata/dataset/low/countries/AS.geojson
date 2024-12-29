@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -170.7262,
+              -14.3513
+            ],
+            [
+              -170.8205,
+              -14.3122
+            ],
+            [
+              -170.6891,
+              -14.2576
+            ],
+            [
+              -170.7262,
+              -14.3513
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "American Samoa",
+        "id": "AS"
+      },
+      "id": "AS"
+    }
+  ]
+}

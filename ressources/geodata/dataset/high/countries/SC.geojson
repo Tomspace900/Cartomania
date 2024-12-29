@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              55.5402,
+              -4.6931
+            ],
+            [
+              55.3835,
+              -4.6092
+            ],
+            [
+              55.4559,
+              -4.5586
+            ],
+            [
+              55.5402,
+              -4.6931
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Seychelles",
+        "id": "SC"
+      },
+      "id": "SC"
+    }
+  ]
+}

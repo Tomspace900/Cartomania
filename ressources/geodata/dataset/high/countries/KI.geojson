@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -157.3422,
+              1.8557
+            ],
+            [
+              -157.2461,
+              1.7318
+            ],
+            [
+              -157.4201,
+              1.7873
+            ],
+            [
+              -157.3422,
+              1.8557
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Kiribati",
+        "id": "KI"
+      },
+      "id": "KI"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.8263,
+              14.4946
+            ],
+            [
+              -61.0638,
+              14.4671
+            ],
+            [
+              -61.2198,
+              14.8044
+            ],
+            [
+              -60.9186,
+              14.7352
+            ],
+            [
+              -60.8263,
+              14.4946
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Martinique",
+        "id": "MQ"
+      },
+      "id": "MQ"
+    }
+  ]
+}

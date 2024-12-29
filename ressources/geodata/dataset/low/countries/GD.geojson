@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.7154,
+              12.0128
+            ],
+            [
+              -61.715,
+              12.185
+            ],
+            [
+              -61.6071,
+              12.2232
+            ],
+            [
+              -61.6271,
+              12.0541
+            ],
+            [
+              -61.7154,
+              12.0128
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Grenada",
+        "id": "GD"
+      },
+      "id": "GD"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.6923,
+              -15.9977
+            ],
+            [
+              -5.775,
+              -15.9568
+            ],
+            [
+              -5.7078,
+              -15.9062
+            ],
+            [
+              -5.6923,
+              -15.9977
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Helena",
+        "id": "SH"
+      },
+      "id": "SH"
+    }
+  ]
+}

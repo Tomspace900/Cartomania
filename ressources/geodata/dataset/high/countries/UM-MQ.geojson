@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -177.3881,
+              28.1865
+            ],
+            [
+              -177.3879,
+              28.2144
+            ],
+            [
+              -177.3646,
+              28.2042
+            ],
+            [
+              -177.3881,
+              28.1865
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Midway Islands",
+        "id": "UM-MQ"
+      },
+      "id": "UM-MQ"
+    }
+  ]
+}

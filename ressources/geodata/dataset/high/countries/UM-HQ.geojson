@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -176.6311,
+              0.7952
+            ],
+            [
+              -176.6433,
+              0.7934
+            ],
+            [
+              -176.6429,
+              0.8081
+            ],
+            [
+              -176.6329,
+              0.8085
+            ],
+            [
+              -176.6311,
+              0.7952
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Howland Island",
+        "id": "UM-HQ"
+      },
+      "id": "UM-HQ"
+    }
+  ]
+}

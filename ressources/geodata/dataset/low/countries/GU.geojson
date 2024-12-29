@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.7416,
+              13.2593
+            ],
+            [
+              144.6493,
+              13.4288
+            ],
+            [
+              144.7905,
+              13.5269
+            ],
+            [
+              144.7416,
+              13.2593
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Guam",
+        "id": "GU"
+      },
+      "id": "GU"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.2817,
+              15.2492
+            ],
+            [
+              -61.3754,
+              15.2275
+            ],
+            [
+              -61.481,
+              15.5253
+            ],
+            [
+              -61.3201,
+              15.5853
+            ],
+            [
+              -61.2511,
+              15.3731
+            ],
+            [
+              -61.2817,
+              15.2492
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Dominica",
+        "id": "DM"
+      },
+      "id": "DM"
+    }
+  ]
+}

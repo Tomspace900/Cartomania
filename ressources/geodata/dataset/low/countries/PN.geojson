@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -128.2901,
+              -24.3974
+            ],
+            [
+              -128.3205,
+              -24.3997
+            ],
+            [
+              -128.3503,
+              -24.3402
+            ],
+            [
+              -128.3037,
+              -24.3335
+            ],
+            [
+              -128.2901,
+              -24.3974
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Pitcairn Islands",
+        "id": "PN"
+      },
+      "id": "PN"
+    }
+  ]
+}

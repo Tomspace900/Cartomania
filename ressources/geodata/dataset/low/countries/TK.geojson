@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -172.4791,
+              -8.5807
+            ],
+            [
+              -172.4836,
+              -8.5829
+            ],
+            [
+              -172.4987,
+              -8.5478
+            ],
+            [
+              -172.4874,
+              -8.5563
+            ],
+            [
+              -172.4791,
+              -8.5807
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Tokelau",
+        "id": "TK"
+      },
+      "id": "TK"
+    }
+  ]
+}

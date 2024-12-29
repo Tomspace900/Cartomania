@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              166.9584,
+              -0.5165
+            ],
+            [
+              166.9163,
+              -0.5467
+            ],
+            [
+              166.9136,
+              -0.4992
+            ],
+            [
+              166.9584,
+              -0.5165
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Nauru",
+        "id": "NR"
+      },
+      "id": "NR"
+    }
+  ]
+}

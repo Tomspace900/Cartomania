@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              166.6588,
+              19.2829
+            ],
+            [
+              166.6087,
+              19.3073
+            ],
+            [
+              166.6277,
+              19.3246
+            ],
+            [
+              166.6588,
+              19.3117
+            ],
+            [
+              166.6588,
+              19.2829
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Wake Island",
+        "id": "UM-WQ"
+      },
+      "id": "UM-WQ"
+    }
+  ]
+}

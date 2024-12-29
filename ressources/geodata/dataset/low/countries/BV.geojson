@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              3.4624,
+              -54.4471
+            ],
+            [
+              3.3461,
+              -54.4511
+            ],
+            [
+              3.3669,
+              -54.3997
+            ],
+            [
+              3.4814,
+              -54.4001
+            ],
+            [
+              3.4624,
+              -54.4471
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Bouvet Island",
+        "id": "BV"
+      },
+      "id": "BV"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.4853,
+              43.9016
+            ],
+            [
+              12.397,
+              43.9344
+            ],
+            [
+              12.441,
+              43.9824
+            ],
+            [
+              12.5146,
+              43.9531
+            ],
+            [
+              12.4853,
+              43.9016
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "San Marino",
+        "id": "SM"
+      },
+      "id": "SM"
+    }
+  ]
+}

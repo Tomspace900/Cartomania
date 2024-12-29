@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              7.4387,
+              43.7507
+            ],
+            [
+              7.3779,
+              43.7316
+            ],
+            [
+              7.4143,
+              43.7711
+            ],
+            [
+              7.4387,
+              43.7507
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Monaco",
+        "id": "MC"
+      },
+      "id": "MC"
+    }
+  ]
+}

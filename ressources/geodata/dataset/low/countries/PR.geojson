@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -66.1295,
+              18.4448
+            ],
+            [
+              -65.6288,
+              18.3813
+            ],
+            [
+              -65.9708,
+              17.9743
+            ],
+            [
+              -67.1968,
+              17.9943
+            ],
+            [
+              -67.1587,
+              18.4994
+            ],
+            [
+              -66.1295,
+              18.4448
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Puerto Rico",
+        "id": "PR"
+      },
+      "id": "PR"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -64.3952,
+              18.4648
+            ],
+            [
+              -64.4261,
+              18.5132
+            ],
+            [
+              -64.3246,
+              18.5176
+            ],
+            [
+              -64.3952,
+              18.4648
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "British Virgin Islands",
+        "id": "VG"
+      },
+      "id": "VG"
+    }
+  ]
+}

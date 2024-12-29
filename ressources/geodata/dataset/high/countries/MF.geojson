@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -63.0111,
+              18.0688
+            ],
+            [
+              -63.123,
+              18.0688
+            ],
+            [
+              -63.0631,
+              18.1154
+            ],
+            [
+              -63.0111,
+              18.0688
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Saint Martin",
+        "id": "MF"
+      },
+      "id": "MF"
+    }
+  ]
+}

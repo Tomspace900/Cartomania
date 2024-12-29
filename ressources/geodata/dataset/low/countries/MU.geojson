@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              57.6514,
+              -20.485
+            ],
+            [
+              57.3859,
+              -20.2284
+            ],
+            [
+              57.5759,
+              -19.9971
+            ],
+            [
+              57.7921,
+              -20.2124
+            ],
+            [
+              57.6514,
+              -20.485
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Mauritius",
+        "id": "MU"
+      },
+      "id": "MU"
+    }
+  ]
+}

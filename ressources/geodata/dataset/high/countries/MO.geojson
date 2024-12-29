@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.4788,
+              22.1957
+            ],
+            [
+              113.4943,
+              22.2414
+            ],
+            [
+              113.5467,
+              22.2241
+            ],
+            [
+              113.4788,
+              22.1957
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Macau",
+        "id": "MO"
+      },
+      "id": "MO"
+    }
+  ]
+}

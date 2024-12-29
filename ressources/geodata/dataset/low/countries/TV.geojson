@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              179.2223,
+              -8.554
+            ],
+            [
+              179.2023,
+              -8.4653
+            ],
+            [
+              179.2312,
+              -8.5048
+            ],
+            [
+              179.2223,
+              -8.554
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Tuvalu",
+        "id": "TV"
+      },
+      "id": "TV"
+    }
+  ]
+}

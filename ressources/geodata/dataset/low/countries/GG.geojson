@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.5124,
+              49.4946
+            ],
+            [
+              -2.5475,
+              49.4287
+            ],
+            [
+              -2.646,
+              49.4682
+            ],
+            [
+              -2.5124,
+              49.4946
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Guernsey",
+        "id": "GG"
+      },
+      "id": "GG"
+    }
+  ]
+}

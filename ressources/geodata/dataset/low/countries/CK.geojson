@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -159.7406,
+              -21.2494
+            ],
+            [
+              -159.8395,
+              -21.2383
+            ],
+            [
+              -159.832,
+              -21.2005
+            ],
+            [
+              -159.7683,
+              -21.1885
+            ],
+            [
+              -159.7406,
+              -21.2494
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Cook Islands",
+        "id": "CK"
+      },
+      "id": "CK"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              45.1802,
+              -12.9765
+            ],
+            [
+              45.0692,
+              -12.8957
+            ],
+            [
+              45.1349,
+              -12.7093
+            ],
+            [
+              45.2233,
+              -12.7519
+            ],
+            [
+              45.1802,
+              -12.9765
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Mayotte",
+        "id": "YT"
+      },
+      "id": "YT"
+    }
+  ]
+}

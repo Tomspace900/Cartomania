@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -69.8992,
+              12.4518
+            ],
+            [
+              -69.9421,
+              12.4385
+            ],
+            [
+              -70.0661,
+              12.5468
+            ],
+            [
+              -69.9732,
+              12.5677
+            ],
+            [
+              -69.8992,
+              12.4518
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Aruba",
+        "id": "AW"
+      },
+      "id": "AW"
+    }
+  ]
+}

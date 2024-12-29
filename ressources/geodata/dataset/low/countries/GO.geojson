@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              47.3029,
+              -11.5752
+            ],
+            [
+              47.282,
+              -11.5747
+            ],
+            [
+              47.2789,
+              -11.5574
+            ],
+            [
+              47.2971,
+              -11.5543
+            ],
+            [
+              47.3029,
+              -11.5752
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Glorioso Islands",
+        "id": "GO"
+      },
+      "id": "GO"
+    }
+  ]
+}
