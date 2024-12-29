@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import parser from '@typescript-eslint/parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,19 +14,33 @@ const compat = new FlatCompat({
 	allConfig: js.configs.all,
 });
 
-export default [
+const config = [
+	{
+		ignores: [
+			'**/.next/',
+			'**/node_modules/',
+			'**/dist/',
+			'**/build/',
+			'**/.next/',
+			'**/node_modules/',
+			'**/dist/',
+			'**/build/',
+		],
+	},
 	...compat.extends(
 		'next/core-web-vitals',
 		'next/typescript',
-		'eslint:recommended',
 		'plugin:prettier/recommended',
-		'plugin:@typescript-eslint/recommended',
-		'prettier'
+		'plugin:@typescript-eslint/recommended'
 	),
 	{
 		plugins: {
 			'@typescript-eslint': typescriptEslint,
 			'unused-imports': unusedImports,
+		},
+
+		languageOptions: {
+			parser,
 		},
 
 		rules: {
@@ -38,7 +53,6 @@ export default [
 			quotes: ['warn', 'single'],
 			'no-unused-vars': 'off',
 			'unused-imports/no-unused-imports': 'error',
-
 			'unused-imports/no-unused-vars': [
 				'warn',
 				{
@@ -51,3 +65,5 @@ export default [
 		},
 	},
 ];
+
+export default config;

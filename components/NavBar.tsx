@@ -34,7 +34,7 @@ const NavBar = () => {
 							height={40}
 						/>
 						<h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden sm:block">
-							{`Cartomania `}
+							{'Cartomania '}
 							{mode && <span className="text-lg text-primary dark:text-white">{`/${mode}`}</span>}
 						</h1>
 					</div>

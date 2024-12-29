@@ -8,7 +8,6 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 interface IMapProps {
 	type: 'map' | 'glob';
 	name: string;
-	// eslint-disable-next-line no-undef
 	geoData: GeoJSON.GeoJSON[];
 	animate?: boolean;
 	center?: { longitude: number; latitude: number };

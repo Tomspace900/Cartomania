@@ -7,12 +7,20 @@
 		"build": "prisma generate && prisma migrate deploy && next build",
 		"start": "next start",
 		"lint": "next lint",
-		"format-all": "prettier --write .",
-		"postinstall": "prisma generate"
+		"eslint": "eslint .",
+		"eslint-fix": "eslint . --fix",
+		"format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}'",
+		"format-fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
+		"ts-check": "tsc --noEmit",
+		"postinstall": "prisma generate",
+		"prepare": "husky",
+		"lint-staged": "pnpm eslint-fix && pnpm format-fix && pnpm ts-check"
 	},
 	"dependencies": {
 		"@amcharts/amcharts5": "^5.10.9",
 		"@auth/prisma-adapter": "^2.7.4",
+		"@eslint/eslintrc": "^3.2.0",
+		"@eslint/js": "^9.17.0",
 		"@prisma/client": "^6.1.0",
 		"@radix-ui/react-label": "^2.1.0",
 		"@radix-ui/react-popover": "^1.1.2",
@@ -34,8 +42,6 @@
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.2.0",
-		"@eslint/js": "^9.17.0",
 		"@types/js-cookie": "^3.0.6",
 		"@types/lodash": "^4.17.1",
 		"@types/node": "^20",
@@ -48,8 +54,8 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
 		"eslint-plugin-unused-imports": "^4.1.4",
+		"husky": "^9.1.7",
 		"postcss": "^8",
-		"prettier": "^3.4.2",
 		"prisma": "^6.1.0",
 		"tailwindcss": "^3.4.1",
 		"typescript": "^5"

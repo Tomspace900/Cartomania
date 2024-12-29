@@ -16,10 +16,9 @@ interface IWinScreenProps {
 }
 
 const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
-  const [loading, setLoading] = useState<LoadingState>("idle");
-  // eslint-disable-next-line no-undef
-  const [geoData, setGeoData] = useState<GeoJSON.GeoJSON[]>([]);
-  const { initGame, getTimer, totalErrorCount } = useGameState();
+	const [loading, setLoading] = useState<LoadingState>('idle');
+	const [geoData, setGeoData] = useState<GeoJSON.GeoJSON[]>([]);
+	const { initGame, getTimer, totalErrorCount } = useGameState();
 
 	const currentContinent: Am5ContinentId | undefined = getContinentByCode(continentCode)?.am5Id;
 
@@ -45,44 +44,44 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
 	const computeRotateTo = (): { longitude: number; latitude: number } =>
 		continentCode ? continentCoordinates[continentCode] : { latitude: 0, longitude: 0 };
 
-  return (
-    <>
-      <ReactConfetti
-        height={document.documentElement.scrollHeight}
-        width={window.innerWidth}
-        recycle={false}
-        numberOfPieces={1000}
-        gravity={0.2}
-      />
-      <div className="flex flex-col h-full justify-center items-center mt-10 text-2xl gap-4">
-        <div>{`Bravo t'es un(e) chef`}</div>
+	return (
+		<>
+			<ReactConfetti
+				height={document.documentElement.scrollHeight}
+				width={window.innerWidth}
+				recycle={false}
+				numberOfPieces={1000}
+				gravity={0.2}
+			/>
+			<div className="flex flex-col h-full justify-center items-center mt-10 text-2xl gap-4">
+				<div>{"Bravo t'es un(e) chef"}</div>
 
-        <div className="flex items-center gap-2">
-          <Timer className="h-8 w-8" />
-          {formatTimer(getTimer())}
-        </div>
+				<div className="flex items-center gap-2">
+					<Timer className="h-8 w-8" />
+					{formatTimer(getTimer())}
+				</div>
 
-        <div className="flex items-center gap-2">
-          <X className="h-8 w-8" />
-          {`${totalErrorCount} errors`}
-        </div>
-        <Button className="mt-10" onClick={() => initGame(gameParams)}>
-          Rejouer
-        </Button>
-        <div className="max-w-full w-[400px] min-h-[300px] flex-grow">
-          {loading === "done" && !isEmpty(geoData) && (
-            <Map
-              type="glob"
-              name="win"
-              geoData={geoData}
-              rotateTo={computeRotateTo()}
-              highlightedPolygonId={currentContinent}
-            />
-          )}
-        </div>
-      </div>
-    </>
-  );
+				<div className="flex items-center gap-2">
+					<X className="h-8 w-8" />
+					{`${totalErrorCount} errors`}
+				</div>
+				<Button className="mt-10" onClick={() => initGame(gameParams)}>
+					Rejouer
+				</Button>
+				<div className="max-w-full w-[400px] min-h-[300px] flex-grow">
+					{loading === 'done' && !isEmpty(geoData) && (
+						<Map
+							type="glob"
+							name="win"
+							geoData={geoData}
+							rotateTo={computeRotateTo()}
+							highlightedPolygonId={currentContinent}
+						/>
+					)}
+				</div>
+			</div>
+		</>
+	);
 };
 
 export default WinScreen;

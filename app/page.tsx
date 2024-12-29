@@ -17,7 +17,6 @@ export default function Home() {
 	const router = useRouter();
 	const continents = getContinents();
 	const [loading, setLoading] = useState<LoadingState>('idle');
-	// eslint-disable-next-line no-undef
 	const [continentsGeoData, setContinentsGeoData] = useState<GeoJSON.GeoJSON>();
 	const [globCoordinates, setGlobCoordinates] = useState<{
 		longitude: number;
@@ -43,15 +42,15 @@ export default function Home() {
 		const fetchGeoData = async () => {
 			setLoading('loading');
 
-      try {
-        const data = await loadGeodata("continents", true);
-        setContinentsGeoData(data);
-        setLoading("done");
-      } catch (error) {
-        console.error(error);
-        setLoading("failed");
-      }
-    };
+			try {
+				const data = await loadGeodata('continents', true);
+				setContinentsGeoData(data);
+				setLoading('done');
+			} catch (error) {
+				console.error(error);
+				setLoading('failed');
+			}
+		};
 
 		fetchGeoData();
 	}, []);
@@ -62,7 +61,7 @@ export default function Home() {
 				<h1 className="text-2xl">Select a continent...</h1>
 				<div className="flex gap-2 flex-wrap justify-center">
 					<Button key={'world'} asChild className="hover:scale-[1.02] transition-transform duration-100 ease-in-out">
-						<Link href={`/game/world/flags`}>World</Link>
+						<Link href={'/game/world/flags'}>World</Link>
 					</Button>
 					{continents.map((continent) => (
 						<Button
