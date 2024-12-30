@@ -1,6 +1,6 @@
-import { MapEntity } from '@/components/MapV2';
+import { MapEntity, MapEntityType } from '@/components/MapV2';
 import { GameCountry } from '@/contexts/GameContext';
-import { getContinents } from '@/ressources/countryUtils';
+import { getContinents, loadContinentGeodata, loadCountryGeodata } from '@/ressources/countryUtils';
 import { Continent, ContinentCode } from '@/ressources/types';
 import { clsx, type ClassValue } from 'clsx';
 import _ from 'lodash';
@@ -41,15 +41,44 @@ export const isParamMatchAnyContinent = (params?: string): ContinentCode | undef
 	return continentMatch?.code;
 };
 
-export const countryToMapEntity = (country: GameCountry): MapEntity<GameCountry> => ({
-	type: 'country',
-	code: country.cca2,
-	disabled: country.disabled,
-	entity: country,
-});
+export const toMapEntity = (entityType: MapEntityType, entity: any, detailed?: boolean): Promise<MapEntity<any>> => {
+	switch (entityType) {
+		case 'country':
+			return countryToMapEntity(entity, detailed);
+		case 'continent':
+			return continentToMapEntity(entity, detailed);
+		default:
+			throw new Error('Invalid entity type');
+	}
+};
 
-export const continentToMapEntity = (continent: Continent): MapEntity<Continent> => ({
-	type: 'continent',
-	code: continent.code,
-	entity: continent,
-});
+export const countryToMapEntity = async (country: GameCountry, detailed?: boolean): Promise<MapEntity<GameCountry>> => {
+	let geoData = null;
+	try {
+		geoData = await loadCountryGeodata(country.cca2, detailed);
+	} catch (error) {
+		geoData = null;
+	}
+	return {
+		type: 'country',
+		code: country.cca2,
+		disabled: country.disabled,
+		entity: country,
+		geoData,
+	};
+};
+
+export const continentToMapEntity = async (continent: Continent, detailed?: boolean): Promise<MapEntity<Continent>> => {
+	let geoData = null;
+	try {
+		geoData = await loadContinentGeodata(continent.code, detailed);
+	} catch (error) {
+		geoData = null;
+	}
+	return {
+		type: 'continent',
+		code: continent.code,
+		entity: continent,
+		geoData,
+	};
+};

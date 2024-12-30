@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { continentToMapEntity, formatToURL } from '@/lib/utils';
+import { formatToURL } from '@/lib/utils';
 import { getContinentByCode, getContinents } from '@/ressources/countryUtils';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Continent } from '@/ressources/types';
 import { useRouter } from 'next/navigation';
-import MapV2 from '@/components/MapV2';
+import MapLoader from '@/components/MapLoader';
 
 const isMobile = window.innerWidth < 640;
 
@@ -52,14 +52,17 @@ export default function Home() {
 
 			<div className="flex items-center min-h-[300px] flex-grow">
 				<div className="w-full h-full max-h-[500px]">
-					<MapV2
-						type="glob"
-						name="world"
-						entities={continents.map((c) => continentToMapEntity(c))}
-						animate
-						enablePan={isMobile}
-						rotateTo={globCoordinates}
-						handleClick={handleGlobClick}
+					<MapLoader
+						entityType="continent"
+						entities={continents}
+						mapProps={{
+							type: 'glob',
+							name: 'world',
+							animate: true,
+							enablePan: isMobile,
+							rotateTo: globCoordinates,
+							handleClick: handleGlobClick,
+						}}
 					/>
 				</div>
 			</div>
