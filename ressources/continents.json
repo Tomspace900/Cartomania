@@ -15,7 +15,7 @@
 			"longitude": 0.0
 		}
 	},
-	{ "name": "Asia", "code": "AS" },
+	{ "name": "Asia", "code": "AS", "latLng": { "latitude": 31.0, "longitude": 90.0 } },
 	{
 		"name": "Europe",
 		"code": "EU",
