@@ -8,33 +8,28 @@ import { isParamMatchAnyContinent } from '@/lib/utils';
 import WinScreen from '@/components/WinScreen';
 import FlagsGame from '@/components/FlagsGame';
 import DefaultGame from '@/components/DefaultGame';
-
-enum GameMode {
-	FLAGS = 'flags',
-	CAPITALS = 'capitals',
-	DEFAULT = 'default',
-}
+import { GameType } from '@prisma/client';
 
 const Game = () => {
 	const params = useParams<{ region: string; mode?: string[] }>();
 	const router = useRouter();
-	const [validMode, setValidMode] = useState<GameMode | undefined>(undefined);
+	const [validMode, setValidMode] = useState<GameType | undefined>(undefined);
 
 	const clearUrl = (mode?: string) => router.push(`/game/${params.region}/${mode || 'default'}`);
 
 	useEffect(() => {
 		if (!params.mode) clearUrl();
-		else if (!Object.values(GameMode).includes(params.mode[0] as GameMode)) clearUrl();
+		else if (!Object.values(GameType).includes(params.mode[0] as GameType)) clearUrl();
 		else if (params.mode.length > 1) clearUrl(params.mode[0]);
-		else setValidMode(params.mode[0] as GameMode);
+		else setValidMode(params.mode[0] as GameType);
 	}, [params, router]);
 
-	const continentCode = isParamMatchAnyContinent(params.region);
+	const regionCode = isParamMatchAnyContinent(params.region);
 	const { gameState, initGame } = useGameState();
 
 	const gameParams: GameParams = {
-		continentCode,
-		UNMembersOnly: validMode === GameMode.FLAGS, // ! permettre vrai seulement sur les drapeaux pas les cartes
+		regionCode,
+		UNMembersOnly: validMode === GameType.FLAGS, // ! permettre vrai seulement sur les drapeaux pas les cartes
 	};
 
 	useEffect(() => {
@@ -53,7 +48,7 @@ const Game = () => {
 			return <div className="flex justify-center items-center mt-10 text-2xl">Perdu mon chef</div>;
 
 		case 'win':
-			return <WinScreen continentCode={continentCode} gameParams={gameParams} />;
+			return <WinScreen regionCode={regionCode} gameParams={gameParams} />;
 
 		case 'loaded':
 		case 'playing':

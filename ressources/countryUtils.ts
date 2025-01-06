@@ -1,5 +1,6 @@
-import continents from './continents.json';
-import { Continent, ContinentCode, Country, CountryCode } from './types';
+import { RegionCode } from '@prisma/client';
+import { Continent, Country, CountryCode } from './types';
+import continents from './continents';
 
 export const getCountries = async () =>
 	fetch('/api/data/country').then((res) => {
@@ -24,14 +25,14 @@ export const getUNMembersCountries = (): Promise<Country[]> =>
 export const getCountryByCode = (code: CountryCode): Promise<Country | undefined> =>
 	getCountries().then((res) => res.find((country) => country.cca3 === code));
 
-export const getContinentByCode = (code?: ContinentCode, continents?: Continent[]) => {
+export const getContinentByCode = (code?: RegionCode, continents?: Continent[]) => {
 	if (!code) return undefined;
 	const allContinents = continents || getContinents();
 	return allContinents.find((continent) => continent.code === code);
 };
 
 export const loadCountryGeodata = async (
-	cca2: CountryCode | ContinentCode,
+	cca2: CountryCode | RegionCode,
 	detailed: boolean = false,
 	extended: boolean = false
 ): Promise<GeoJSON.FeatureCollection> => {
@@ -53,10 +54,7 @@ export const loadCountryGeodata = async (
 	}
 };
 
-export const loadContinentGeodata = async (
-	code: ContinentCode,
-	detailed: boolean = false
-): Promise<GeoJSON.FeatureCollection> => {
+export const loadContinentGeodata = async (code: RegionCode, detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
 	const resolution = detailed ? 'high' : 'low';
 
 	if (!code) {

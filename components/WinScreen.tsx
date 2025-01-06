@@ -3,19 +3,19 @@ import ReactConfetti from 'react-confetti';
 import { Button } from './ui/button';
 import { formatTimer } from '@/lib/utils';
 import { Timer, X } from 'lucide-react';
-import { ContinentCode } from '@/ressources/types';
 import { GameParams, useGameState } from '@/contexts/GameContext';
 import { isEmpty } from 'lodash';
 import { LoadingState } from '@/lib/types';
 import { getContinentByCode, loadContinentGeodata, loadWorldGeodata } from '@/ressources/countryUtils';
 import Map from './Map';
+import { RegionCode } from '@prisma/client';
 
 interface IWinScreenProps {
-	continentCode?: ContinentCode;
+	regionCode?: RegionCode;
 	gameParams: GameParams;
 }
 
-const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
+const WinScreen = ({ regionCode, gameParams }: IWinScreenProps) => {
 	const [loading, setLoading] = useState<LoadingState>('idle');
 	const [geoData, setGeoData] = useState<GeoJSON.GeoJSON[]>([]);
 	const { initGame, getTimer, totalErrorCount } = useGameState();
@@ -27,7 +27,7 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
 			try {
 				const allGeoData = await Promise.all([
 					loadWorldGeodata(),
-					continentCode ? loadContinentGeodata(continentCode) : Promise.resolve({} as GeoJSON.FeatureCollection),
+					regionCode ? loadContinentGeodata(regionCode) : Promise.resolve({} as GeoJSON.FeatureCollection),
 				]);
 				setGeoData(allGeoData);
 				setLoading('done');
@@ -38,10 +38,10 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
 		};
 
 		fetchGeoData();
-	}, [continentCode]);
+	}, [regionCode]);
 
 	const computeRotateTo = (): { longitude: number; latitude: number } =>
-		getContinentByCode(continentCode)?.latLng || { latitude: 0, longitude: 0 };
+		getContinentByCode(regionCode)?.latLng || { latitude: 0, longitude: 0 };
 
 	return (
 		<>
@@ -74,7 +74,7 @@ const WinScreen = ({ continentCode, gameParams }: IWinScreenProps) => {
 							name="win"
 							geoData={geoData}
 							rotateTo={computeRotateTo()}
-							highlightedPolygonId={continentCode}
+							highlightedPolygonId={regionCode}
 						/>
 					)}
 				</div>

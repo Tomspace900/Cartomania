@@ -1,3 +1,5 @@
+import { RegionCode } from '@prisma/client';
+
 export interface Country {
 	name: {
 		common: string;
@@ -30,7 +32,7 @@ export interface Country {
 
 export interface Continent {
 	name: ContinentName;
-	code: ContinentCode;
+	code: RegionCode;
 	latLng: {
 		latitude: number;
 		longitude: number;
@@ -38,8 +40,6 @@ export interface Continent {
 }
 
 export type ContinentName = 'Africa' | 'Asia' | 'Europe' | 'North America' | 'Oceania' | 'South America' | 'Antarctica';
-export type ContinentCode = 'AF' | 'NA' | 'SA' | 'AS' | 'EU' | 'OC' | 'AN';
-export type Am5ContinentId = 'africa' | 'asia' | 'europe' | 'northAmerica' | 'oceania' | 'southAmerica' | 'antarctica';
 
 export type CountryCode = string;
 export type LanguageCode = string;

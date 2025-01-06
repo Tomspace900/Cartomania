@@ -1,7 +1,8 @@
 import { MapEntity, MapEntityType } from '@/components/MapV2';
 import { GameCountry } from '@/contexts/GameContext';
 import { getContinents, loadContinentGeodata, loadCountryGeodata } from '@/ressources/countryUtils';
-import { Continent, ContinentCode } from '@/ressources/types';
+import { Continent } from '@/ressources/types';
+import { RegionCode } from '@prisma/client';
 import { clsx, type ClassValue } from 'clsx';
 import _ from 'lodash';
 import { twMerge } from 'tailwind-merge';
@@ -30,7 +31,7 @@ export function formatToURL(region?: string): string | undefined {
 		.toLowerCase();
 }
 
-export const isParamMatchAnyContinent = (params?: string): ContinentCode | undefined => {
+export const isParamMatchAnyContinent = (params?: string): RegionCode | undefined => {
 	if (!params) return undefined;
 	const continents = getContinents();
 

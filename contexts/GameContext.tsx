@@ -1,12 +1,13 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { ContinentCode, Country } from '@/ressources/types';
+import { Country } from '@/ressources/types';
 import _ from 'lodash';
 import { getCountries, getUNMembersCountries } from '@/ressources/countryUtils';
 import { useTimer } from '@/hooks/use-timer';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import { RegionCode } from '@prisma/client';
 
 export type IGameLoadingState = 'idle' | 'loading' | 'loaded' | 'playing' | 'win' | 'lose' | 'error';
 
@@ -15,7 +16,7 @@ export type QuestionStatus = 'idle' | 'correct' | 'incorrect';
 export type GameCountry = Country & { disabled: boolean };
 
 export interface GameParams {
-	continentCode?: ContinentCode;
+	regionCode?: RegionCode;
 	UNMembersOnly?: boolean;
 }
 
@@ -24,7 +25,7 @@ interface IGameContext {
 	questionStatus: QuestionStatus;
 	errorCount: number;
 	totalErrorCount: number;
-	gameRegion?: ContinentCode;
+	gameRegion?: RegionCode;
 	gameCountries: GameCountry[];
 	askedCountry?: GameCountry;
 	getTimer: () => number;
@@ -53,7 +54,7 @@ const GameContext = createContext<IGameContext>(initialState);
 
 export function GameProvider({ children, ...props }: { children: React.ReactNode }) {
 	const [gameState, setGameState] = useState<IGameLoadingState>('idle');
-	const [gameRegion, setGameRegion] = useState<ContinentCode>();
+	const [gameRegion, setGameRegion] = useState<RegionCode>();
 	const [gameCountries, setGameCountries] = useState<GameCountry[]>([]);
 	const [askedCountry, setAskedCountry] = useState<GameCountry>();
 	const [questionStatus, setQuestionStatus] = useState<QuestionStatus>('idle');
@@ -66,14 +67,14 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		return _.sample(countries) as GameCountry;
 	}, []);
 
-	const initGame = ({ continentCode, UNMembersOnly }: GameParams) => {
+	const initGame = ({ regionCode, UNMembersOnly }: GameParams) => {
 		setGameState('loading');
 
 		const countriesToFecth = UNMembersOnly ? getUNMembersCountries() : getCountries();
 
 		countriesToFecth.then((countries) => {
-			const filteredCountries = continentCode
-				? countries.filter((country) => country.continent.code === continentCode)
+			const filteredCountries = regionCode
+				? countries.filter((country) => country.continent.code === regionCode)
 				: countries;
 
 			const shuffledCountries: Country[] = _.shuffle(filteredCountries);
@@ -89,7 +90,7 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 
 			setErrorCount(0);
 			setTotalErrorCount(0);
-			setGameRegion(continentCode);
+			setGameRegion(regionCode);
 			setGameCountries(shuffledGameCountries);
 			setAskedCountry(getRandomCountry(shuffledGameCountries));
 			setGameState('loaded');
