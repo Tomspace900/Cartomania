@@ -8,7 +8,7 @@ import { useTimer } from '@/hooks/useTimer';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { GameType, RegionCode, Score } from '@prisma/client';
-import { createScore, updateScore } from '@/api/score';
+import { createScore, updateScore } from '@/services/score';
 import { useUser } from '@/hooks/useUser';
 import { Button } from '@/components/ui/button';
 import { Crown, Eraser } from 'lucide-react';

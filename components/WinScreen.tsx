@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import { LoadingState } from '@/lib/types';
 import { getContinentByCode, loadContinentGeodata, loadWorldGeodata } from '@/ressources/countryUtils';
 import Map from './Map';
-import { getTopScores, TopScore } from '@/api/score';
+import { getTopScores, TopScore } from '@/services/score';
 import TopScores from './TopScores';
 
 interface IWinScreenProps {

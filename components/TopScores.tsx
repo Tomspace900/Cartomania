@@ -1,4 +1,4 @@
-import { TopScore } from '@/api/score';
+import { TopScore } from '@/services/score';
 import { useUser } from '@/hooks/useUser';
 import { Score } from '@prisma/client';
 import { Ban, Hourglass, LoaderIcon, Medal, Trophy } from 'lucide-react';

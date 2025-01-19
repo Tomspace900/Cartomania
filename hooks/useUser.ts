@@ -1,6 +1,6 @@
 'use client';
 
-import { getCurrentUser } from '@/api/user';
+import { getCurrentUser } from '@/services/user';
 import { User } from '@prisma/client';
 import { useEffect, useState } from 'react';
 
