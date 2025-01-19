@@ -25,7 +25,7 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
 					'flex justify-center items-center pointer-events-none h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0'
 				)}
 			>
-				{isThemeSwitcher && props.checked ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+				{isThemeSwitcher && (props.checked ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />)}
 			</SwitchPrimitives.Thumb>
 		</SwitchPrimitives.Root>
 	)

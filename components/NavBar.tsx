@@ -15,7 +15,7 @@ const NavBar = () => {
 	const user = data?.user;
 	const pathname = usePathname();
 	const { theme } = useTheme();
-	const { mode } = useParams<{ mode: string }>();
+	const { region, mode } = useParams<{ region: string; mode: string }>();
 
 	// Hide the NavBar on login & logout pages
 	if (pathname.startsWith('/login') || pathname.startsWith('/logout')) {
@@ -36,6 +36,7 @@ const NavBar = () => {
 						<h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden sm:block">
 							{'Cartomania '}
 							{mode && <span className="text-lg text-primary dark:text-white">{`/${mode}`}</span>}
+							{region && <span className="text-lg text-primary dark:text-white">{`/${region}`}</span>}
 						</h1>
 					</div>
 				</Link>

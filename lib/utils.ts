@@ -3,13 +3,7 @@ import { GameCountry } from '@/contexts/GameContext';
 import { getContinents, loadContinentGeodata, loadCountryGeodata } from '@/ressources/countryUtils';
 import { Continent } from '@/ressources/types';
 import { RegionCode } from '@prisma/client';
-import { clsx, type ClassValue } from 'clsx';
 import _ from 'lodash';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
-}
 
 export function formatTimer(timer?: number): string {
 	if (!timer) return '0:00';
