@@ -7,7 +7,19 @@ import { getCountries, getUNMembersCountries } from '@/ressources/countryUtils';
 import { useTimer } from '@/hooks/use-timer';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
-import { RegionCode } from '@prisma/client';
+import { GameType, RegionCode } from '@prisma/client';
+
+export enum GameMode {
+	FLAGS = 'flags',
+	CAPITALS = 'capitals',
+	DEFAULT = 'default',
+}
+
+export const gameModeMap: Record<GameMode, GameType> = {
+	flags: GameType.FLAGS,
+	capitals: GameType.CAPITALS,
+	default: GameType.LOCATION,
+};
 
 export type IGameLoadingState = 'idle' | 'loading' | 'loaded' | 'playing' | 'win' | 'lose' | 'error';
 
@@ -16,6 +28,7 @@ export type QuestionStatus = 'idle' | 'correct' | 'incorrect';
 export type GameCountry = Country & { disabled: boolean };
 
 export interface GameParams {
+	mode: GameMode;
 	regionCode?: RegionCode;
 	UNMembersOnly?: boolean;
 }
@@ -53,6 +66,7 @@ const initialState: IGameContext = {
 const GameContext = createContext<IGameContext>(initialState);
 
 export function GameProvider({ children, ...props }: { children: React.ReactNode }) {
+	const [gameMode, setGameMode] = useState<GameMode>();
 	const [gameState, setGameState] = useState<IGameLoadingState>('idle');
 	const [gameRegion, setGameRegion] = useState<RegionCode>();
 	const [gameCountries, setGameCountries] = useState<GameCountry[]>([]);
@@ -67,7 +81,7 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		return _.sample(countries) as GameCountry;
 	}, []);
 
-	const initGame = ({ regionCode, UNMembersOnly }: GameParams) => {
+	const initGame = ({ mode, regionCode, UNMembersOnly }: GameParams) => {
 		setGameState('loading');
 
 		const countriesToFecth = UNMembersOnly ? getUNMembersCountries() : getCountries();
@@ -88,6 +102,7 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 				return;
 			}
 
+			setGameMode(mode);
 			setErrorCount(0);
 			setTotalErrorCount(0);
 			setGameRegion(regionCode);
@@ -171,6 +186,7 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 	}, [gameState, gameCountries]);
 
 	const value = {
+		gameMode,
 		gameState,
 		questionStatus,
 		errorCount,

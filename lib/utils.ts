@@ -58,6 +58,7 @@ export const countryToMapEntity = async (country: GameCountry, detailed?: boolea
 	try {
 		geoData = await loadCountryGeodata(country.cca2, detailed);
 	} catch (error) {
+		console.error('Error loading geodata for country', error);
 		geoData = null;
 	}
 	return {
@@ -74,6 +75,7 @@ export const continentToMapEntity = async (continent: Continent, detailed?: bool
 	try {
 		geoData = await loadContinentGeodata(continent.code, detailed);
 	} catch (error) {
+		console.error('Error loading geodata for continent', error);
 		geoData = null;
 	}
 	return {

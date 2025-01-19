@@ -9,21 +9,21 @@ export const getCountries = async () =>
 		return countries as Promise<Country[]>;
 	});
 
-// export const getContinents = async () =>
-// 	fetch('/api/data/continent').then((res) => {
-// 		const continents = res.json();
-// 		if (!continents) return [];
-// 		return continents as Promise<Continent[]>;
-// 	});
+export const getCountryByCode = (code: CountryCode): Promise<Country | undefined> =>
+	fetch(`/api/data/country/${code}`).then((res) => {
+		if (!res.ok) return undefined;
+		return res.json();
+	});
+
+export const getUNMembersCountries = (): Promise<Country[]> =>
+	fetch('/api/data/country?UN').then((res) => {
+		const countries = res.json();
+		if (!countries) return [];
+		return countries;
+	});
 
 // ! Pour l'instant les continents on va les garder en front
 export const getContinents = () => continents as unknown as Continent[];
-
-export const getUNMembersCountries = (): Promise<Country[]> =>
-	getCountries().then((res) => res.filter((country) => country.UNMember));
-
-export const getCountryByCode = (code: CountryCode): Promise<Country | undefined> =>
-	getCountries().then((res) => res.find((country) => country.cca3 === code));
 
 export const getContinentByCode = (code?: RegionCode, continents?: Continent[]) => {
 	if (!code) return undefined;

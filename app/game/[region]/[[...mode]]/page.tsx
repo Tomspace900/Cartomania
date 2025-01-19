@@ -3,40 +3,44 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Loader from '@/components/Loader';
-import { GameParams, useGameState } from '@/contexts/GameContext';
+import { GameMode, GameParams, useGameState } from '@/contexts/GameContext';
 import { isParamMatchAnyContinent } from '@/lib/utils';
 import WinScreen from '@/components/WinScreen';
 import FlagsGame from '@/components/FlagsGame';
 import DefaultGame from '@/components/DefaultGame';
-import { GameType } from '@prisma/client';
 
 const Game = () => {
 	const params = useParams<{ region: string; mode?: string[] }>();
 	const router = useRouter();
-	const [validMode, setValidMode] = useState<GameType | undefined>(undefined);
+	const [validMode, setValidMode] = useState<GameMode>();
+	const [gameParams, setGameParams] = useState<GameParams>();
 
 	const clearUrl = (mode?: string) => router.push(`/game/${params.region}/${mode || 'default'}`);
 
 	useEffect(() => {
 		if (!params.mode) clearUrl();
-		else if (!Object.values(GameType).includes(params.mode[0] as GameType)) clearUrl();
+		else if (!Object.values(GameMode).includes(params.mode[0] as GameMode)) clearUrl();
 		else if (params.mode.length > 1) clearUrl(params.mode[0]);
-		else setValidMode(params.mode[0] as GameType);
+		else setValidMode(params.mode[0] as GameMode);
 	}, [params, router]);
 
 	const regionCode = isParamMatchAnyContinent(params.region);
 	const { gameState, initGame } = useGameState();
 
-	const gameParams: GameParams = {
-		regionCode,
-		UNMembersOnly: validMode === GameType.FLAGS, // ! permettre vrai seulement sur les drapeaux pas les cartes
-	};
-
 	useEffect(() => {
-		if (validMode) initGame(gameParams);
+		if (validMode)
+			setGameParams({
+				mode: validMode,
+				regionCode,
+				UNMembersOnly: validMode === GameMode.FLAGS, // ! permettre vrai seulement sur les drapeaux pas les cartes
+			});
 	}, [validMode]);
 
-	if (!validMode) return <Loader />;
+	useEffect(() => {
+		if (gameParams) initGame(gameParams);
+	}, [gameParams]);
+
+	if (!gameParams) return <Loader />;
 
 	switch (gameState) {
 		case 'error':
@@ -48,7 +52,7 @@ const Game = () => {
 			return <div className="flex justify-center items-center mt-10 text-2xl">Perdu mon chef</div>;
 
 		case 'win':
-			return <WinScreen regionCode={regionCode} gameParams={gameParams} />;
+			return <WinScreen gameParams={gameParams} />;
 
 		case 'loaded':
 		case 'playing':

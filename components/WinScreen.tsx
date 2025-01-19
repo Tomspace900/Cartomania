@@ -8,14 +8,13 @@ import { isEmpty } from 'lodash';
 import { LoadingState } from '@/lib/types';
 import { getContinentByCode, loadContinentGeodata, loadWorldGeodata } from '@/ressources/countryUtils';
 import Map from './Map';
-import { RegionCode } from '@prisma/client';
 
 interface IWinScreenProps {
-	regionCode?: RegionCode;
 	gameParams: GameParams;
 }
 
-const WinScreen = ({ regionCode, gameParams }: IWinScreenProps) => {
+const WinScreen = ({ gameParams }: IWinScreenProps) => {
+	const { regionCode } = gameParams;
 	const [loading, setLoading] = useState<LoadingState>('idle');
 	const [geoData, setGeoData] = useState<GeoJSON.GeoJSON[]>([]);
 	const { initGame, getTimer, totalErrorCount } = useGameState();
