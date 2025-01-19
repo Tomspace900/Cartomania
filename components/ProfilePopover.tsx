@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Button } from './ui/button';
 import { History, LogOut, Shield, User } from 'lucide-react';
 import Link from 'next/link';
-import { useUser } from '@/hooks/userHooks';
+import { useUser } from '@/hooks/useUser';
 import Image from 'next/image';
 
 const ProfilePopover = () => {

@@ -4,10 +4,14 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { Country } from '@/ressources/types';
 import _ from 'lodash';
 import { getCountries, getUNMembersCountries } from '@/ressources/countryUtils';
-import { useTimer } from '@/hooks/use-timer';
+import { useTimer } from '@/hooks/useTimer';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
-import { GameType, RegionCode } from '@prisma/client';
+import { GameType, RegionCode, Score } from '@prisma/client';
+import { createScore, updateScore } from '@/api/score';
+import { useUser } from '@/hooks/useUser';
+import { Button } from '@/components/ui/button';
+import { Crown, Eraser } from 'lucide-react';
 
 export enum GameMode {
 	FLAGS = 'flags',
@@ -34,10 +38,11 @@ export interface GameParams {
 }
 
 interface IGameContext {
+	gameMode?: GameMode;
 	gameState: IGameLoadingState;
+	adminMenu: React.ReactNode;
 	questionStatus: QuestionStatus;
-	errorCount: number;
-	totalErrorCount: number;
+	currentScore: Score | null;
 	gameRegion?: RegionCode;
 	gameCountries: GameCountry[];
 	askedCountry?: GameCountry;
@@ -49,10 +54,11 @@ interface IGameContext {
 }
 
 const initialState: IGameContext = {
+	gameMode: GameMode.DEFAULT,
 	gameState: 'idle',
+	adminMenu: null,
 	questionStatus: 'idle',
-	errorCount: 0,
-	totalErrorCount: 0,
+	currentScore: null,
 	gameRegion: undefined,
 	gameCountries: [],
 	askedCountry: undefined,
@@ -74,13 +80,17 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 	const [questionStatus, setQuestionStatus] = useState<QuestionStatus>('idle');
 	const [errorCount, setErrorCount] = useState(0);
 	const [totalErrorCount, setTotalErrorCount] = useState(0);
+	const [currentScore, setCurrentScore] = useState<Score | null>(null);
 	const { getTimer, startTimer, stopTimer } = useTimer();
 	const { toast } = useToast();
+	const { user, isAdmin } = useUser();
+	const userId = user?.id;
 
 	const getRandomCountry = useCallback((countries: GameCountry[]): GameCountry => {
 		return _.sample(countries) as GameCountry;
 	}, []);
 
+	// Init game with the given parameters
 	const initGame = ({ mode, regionCode, UNMembersOnly }: GameParams) => {
 		setGameState('loading');
 
@@ -112,11 +122,53 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		});
 	};
 
+	// Start the game
 	const startGame = () => {
 		setGameState('playing');
 		startTimer();
+		initScore();
 	};
 
+	const initScore = useCallback(async () => {
+		if (!userId || !gameMode || !gameRegion) return;
+
+		try {
+			await createScore({
+				userId,
+				gameType: gameModeMap[gameMode],
+				regionCode: gameRegion,
+				time: 0,
+				errors: 0,
+				completed: false,
+			}).then((score) => setCurrentScore(score));
+		} catch (error) {
+			console.error('Failed to initialize score:', error);
+		}
+	}, [userId, gameMode, gameRegion]);
+
+	const updateCurrentScore = useCallback(
+		async (completed: boolean) => {
+			if (!currentScore?.id) return;
+
+			try {
+				await updateScore(currentScore.id, {
+					time: getTimer(),
+					errors: totalErrorCount,
+					completed,
+				}).then((score) => setCurrentScore(score));
+			} catch (error) {
+				console.error('Failed to update score:', error);
+				toast({
+					variant: 'destructive',
+					title: 'Oups ! 😅',
+					description: "Ton score n'a pas pu être enregistré, désolé\u00A0!",
+				});
+			}
+		},
+		[currentScore, getTimer, totalErrorCount]
+	);
+
+	// Handle the click on a country (flag/location)
 	const handleClickedCountry = (country: GameCountry): QuestionStatus => {
 		if (!askedCountry) return 'idle';
 		if (country.cca3 === askedCountry.cca3) {
@@ -138,6 +190,7 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		}
 	};
 
+	// Handle the error count & disable countries to help the player
 	useEffect(() => {
 		switch (errorCount) {
 			case 1:
@@ -169,10 +222,18 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		}
 	}, [errorCount, setGameCountries, askedCountry]);
 
+	// Handle the global game state
 	useEffect(() => {
+		if (gameState === 'win') {
+			stopTimer();
+			updateCurrentScore(gameCountries.length === 0);
+		}
+		if (gameState === 'lose') {
+			stopTimer();
+			updateCurrentScore(false);
+		}
 		if (gameState === 'playing' && gameCountries.length === 0) {
 			setGameState('win');
-			stopTimer();
 		}
 		if (gameState === 'error') {
 			stopTimer();
@@ -185,12 +246,47 @@ export function GameProvider({ children, ...props }: { children: React.ReactNode
 		}
 	}, [gameState, gameCountries]);
 
-	const value = {
+	// Handle the current score when the user leaves the page
+	useEffect(() => {
+		const handleBeforeUnload = () => {
+			if (gameState === 'playing' && currentScore) {
+				updateCurrentScore(false);
+			}
+		};
+
+		window.addEventListener('beforeunload', handleBeforeUnload);
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+			if (gameState === 'playing') {
+				handleBeforeUnload();
+			}
+		};
+	}, [gameState, currentScore, updateCurrentScore]);
+
+	// Admin menu
+	const adminMenuContent = (
+		<div className="flex flex-col gap-2 absolute top-0 right-2">
+			<Button onClick={() => setGameState('win')} className="bg-yellow-300 text-foreground hover:bg-yellow-400">
+				<Crown className="mr-2" />
+				Win
+			</Button>
+			<Button onClick={() => setGameState('lose')} className="bg-red-300 text-foreground hover:bg-red-400">
+				<Eraser className="mr-2" />
+				Lose
+			</Button>
+			<Button onClick={() => setErrorCount(0)} className="bg-orange-300 text-foreground hover:bg-orange-400">
+				<Eraser className="mr-2" />
+				Reset errors
+			</Button>
+		</div>
+	);
+
+	const value: IGameContext = {
 		gameMode,
 		gameState,
+		adminMenu: isAdmin ? adminMenuContent : null,
 		questionStatus,
-		errorCount,
-		totalErrorCount,
+		currentScore,
 		gameRegion,
 		gameCountries,
 		askedCountry,
