@@ -30,7 +30,7 @@ Contributions are welcome! Feel free to open an issue or submit a pull request t
 
 ## License
 
-© Thomas GENDRON 2024. All rights reserved.
+© Thomas GENDRON 2025. All rights reserved.
 
 ---
 
