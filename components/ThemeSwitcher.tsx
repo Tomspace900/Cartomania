@@ -10,7 +10,7 @@ const ThemeSwitcher = () => {
 
 	return (
 		<Switch
-			className="hidden sm:block"
+			className="hidden md:block"
 			isThemeSwitcher
 			checked={theme === 'dark'}
 			defaultChecked={theme === 'dark'}

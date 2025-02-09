@@ -29,7 +29,7 @@ export default function Home() {
 	};
 
 	return (
-		<div className="sm:px-12 px-6 max-w-5xl flex flex-col w-full h-full gap-10">
+		<div className="md:px-12 px-6 max-w-5xl flex flex-col w-full h-full gap-10">
 			<div className="flex flex-col gap-6 justify-center items-center">
 				<h1 className="text-2xl">Select a continent...</h1>
 				<div className="flex gap-2 flex-wrap justify-center">

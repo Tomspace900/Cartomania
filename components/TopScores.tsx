@@ -16,26 +16,29 @@ const TopScores = ({ topScores, currentScore }: ITopScoresProps) => {
 	const { user } = useUser();
 
 	return (
-		<div className="bg-primary/10 dark:bg-white/10 backdrop-blur-sm rounded-lg p-4 w-[400px] max-w-full">
-			<h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-primary dark:text-white">
-				<Trophy className="h-7 w-7" />
-				Best scores
-			</h3>
-			<div className="space-y-2">
-				{topScores ? (
-					topScores.slice(0, 10).map((score, index) => <ScoreLine key={score.id} score={score} index={index} />)
-				) : (
-					<div className="w-full flex justify-center">
-						<LoaderIcon className="h-10 w-10 animate-spin" />
-					</div>
-				)}
-				{currentScore?.completed && user && (
-					<div className="pt-4">
-						<ScoreLine score={{ user: user, time: currentScore.time, errors: currentScore.errors }} index={-1} />
-					</div>
-				)}
+		(topScores?.length || currentScore) && (
+			<div className="bg-primary/10 dark:bg-white/10 backdrop-blur-sm rounded-lg p-4 w-[400px] max-w-full">
+				<h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-primary dark:text-white">
+					<Trophy className="h-7 w-7" />
+					Best scores
+				</h3>
+
+				<div className="space-y-2">
+					{topScores ? (
+						topScores.slice(0, 10).map((score, index) => <ScoreLine key={score.id} score={score} index={index} />)
+					) : (
+						<div className="w-full flex justify-center">
+							<LoaderIcon className="h-10 w-10 animate-spin" />
+						</div>
+					)}
+					{currentScore?.completed && user && (
+						<div className={topScores?.length ? 'pt-4' : ''}>
+							<ScoreLine score={{ user: user, time: currentScore.time, errors: currentScore.errors }} index={-1} />
+						</div>
+					)}
+				</div>
 			</div>
-		</div>
+		)
 	);
 };
 
@@ -55,7 +58,7 @@ function podiumClassName(index: number) {
 }
 
 interface IScoreLineProps {
-	score: { id?: string; user: { name: string | null; image: string | null }; time: number; errors: number };
+	score: { id?: string; user?: { name: string | null; image: string | null }; time: number; errors: number };
 	index: number;
 	className?: string;
 }
@@ -70,7 +73,7 @@ const ScoreLine = ({ score, index, className }: IScoreLineProps) => {
 		>
 			<div className="flex items-center gap-4">
 				<span>{newScore ? 'New' : index < 3 ? <Medal className="h-6 w-6" /> : `#${index + 1}`}</span>
-				{score.user.image && (
+				{score.user?.image && (
 					<Image src={score.user.image} alt="profile-pic" width={30} height={30} className="rounded-full" />
 				)}
 			</div>

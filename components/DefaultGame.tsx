@@ -11,7 +11,7 @@ const DefaultGame = () => {
 	};
 
 	return (
-		<div className="flex flex-col w-full h-full items-center gap-4 px-0 sm:px-4">
+		<div className="flex flex-col w-full h-full items-center gap-4 px-0 md:px-4">
 			<GamePill />
 			<div className="w-full min-h-[300px] flex-grow">
 				<MapLoader

@@ -6,8 +6,9 @@ import { isEmpty } from 'lodash';
 import { LoadingState } from '@/lib/types';
 import { getContinentByCode, loadContinentGeodata, loadWorldGeodata } from '@/ressources/countryUtils';
 import Map from './Map';
-import { getTopScores, TopScore } from '@/services/score';
+import { getUserTopScores, TopScore } from '@/services/score';
 import TopScores from './TopScores';
+import { useUser } from '@/hooks/useUser';
 
 interface IWinScreenProps {
 	gameParams: GameParams;
@@ -19,10 +20,12 @@ const WinScreen = ({ gameParams }: IWinScreenProps) => {
 	const [geoData, setGeoData] = useState<GeoJSON.GeoJSON[]>([]);
 	const { initGame, currentScore } = useGameState();
 	const [topScores, setTopScores] = useState<TopScore[]>();
+	const { user } = useUser();
 
 	useEffect(() => {
 		const fetchTopScores = async () => {
-			if (regionCode) getTopScores(gameModeMap[mode], regionCode).then((scores) => setTopScores(scores));
+			if (regionCode && user)
+				getUserTopScores(user.id, gameModeMap[mode], regionCode, 5).then((scores) => setTopScores(scores));
 		};
 
 		const fetchGeoData = async () => {
@@ -43,7 +46,7 @@ const WinScreen = ({ gameParams }: IWinScreenProps) => {
 		};
 
 		fetchData();
-	}, [regionCode]);
+	}, [regionCode, user]);
 
 	const computeRotateTo = (): { longitude: number; latitude: number } =>
 		getContinentByCode(regionCode)?.latLng || { latitude: 0, longitude: 0 };

@@ -10,12 +10,13 @@ const config = {
 			center: true,
 			padding: '2rem',
 			screens: {
+				xl: '1280px',
 				'2xl': '1400px',
 			},
 		},
 		extend: {
 			fontFamily: {
-				'mea-culpa': ['"Mea Culpa"', 'cursive'],
+				'mea-culpa': ['Mea Culpa', 'cursive'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

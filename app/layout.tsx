@@ -26,7 +26,7 @@ export default function RootLayout({
 				<ThemeProvider defaultTheme="dark">
 					<SessionProvider>
 						<div className="flex justify-center w-full">
-							<div className="flex flex-col items-center w-full max-w-6xl gap-8 min-h-screen">
+							<div className="flex flex-col items-center w-full max-w-[1500px] gap-8 min-h-screen">
 								<NavBar />
 								{children}
 								<Footer />

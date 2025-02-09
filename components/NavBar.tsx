@@ -33,10 +33,12 @@ const NavBar = () => {
 							width={40}
 							height={40}
 						/>
-						<h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden sm:block">
+						<h1 className="text-3xl text-primary dark:text-white font-mea-culpa hidden md:flex xl:flex-row flex-col items-baseline gap-0 xl:gap-2">
 							<span>Cartomania - Dev</span>
-							{mode && <span className="text-lg text-primary dark:text-white">{`/${mode}`}</span>}
-							{region && <span className="text-lg text-primary dark:text-white">{`/${region}`}</span>}
+							<span className="flex">
+								{mode && <span className="text-base text-primary dark:text-white">{`/${mode}`}</span>}
+								{region && <span className="text-base text-primary dark:text-white">{`/${region}`}</span>}
+							</span>
 						</h1>
 					</div>
 				</Link>
@@ -49,8 +51,8 @@ const NavBar = () => {
 					) : (
 						<Button asChild>
 							<Link href={'/login'}>
-								<User className="sm:hidden block h-4 w-4" />
-								<span className="sm:block hidden">Login</span>
+								<User className="md:hidden block h-4 w-4" />
+								<span className="md:block hidden">Login</span>
 							</Link>
 						</Button>
 					)

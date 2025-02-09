@@ -27,7 +27,32 @@ export async function getScoreById(id: string) {
 	}
 }
 
-export async function getUserTopScores(userId: string, gameType: GameType, regionCode: RegionCode, limit: number = 5) {
+export type TopScore = {
+	id: string;
+	time: number;
+	errors: number;
+	completed: boolean;
+	user?: {
+		id: string;
+		name: string | null;
+		image: string | null;
+	};
+	gameMode: {
+		id: number;
+		type: GameType;
+	};
+	region: {
+		id: number;
+		code: RegionCode;
+	};
+};
+
+export async function getUserTopScores(
+	userId: string,
+	gameType: GameType,
+	regionCode: RegionCode,
+	limit: number = 5
+): Promise<TopScore[]> {
 	try {
 		const gameMode = await prisma.gameMode.findUnique({
 			where: { type: gameType },
@@ -48,10 +73,17 @@ export async function getUserTopScores(userId: string, gameType: GameType, regio
 				completed: true,
 			},
 			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						image: true,
+					},
+				},
 				gameMode: true,
 				region: true,
 			},
-			orderBy: [{ time: 'asc' }, { errors: 'asc' }, { createdAt: 'desc' }],
+			orderBy: [{ score: 'asc' }, { errors: 'asc' }, { time: 'asc' }, { createdAt: 'asc' }],
 			take: limit,
 		});
 		return scores;
@@ -60,26 +92,6 @@ export async function getUserTopScores(userId: string, gameType: GameType, regio
 		throw new Error('Failed to fetch user scores');
 	}
 }
-
-export type TopScore = {
-	id: string;
-	time: number;
-	errors: number;
-	completed: boolean;
-	user: {
-		id: string;
-		name: string | null;
-		image: string | null;
-	};
-	gameMode: {
-		id: number;
-		type: GameType;
-	};
-	region: {
-		id: number;
-		code: RegionCode;
-	};
-};
 
 export async function getTopScores(gameType: GameType, regionCode: RegionCode, limit: number = 10): Promise<TopScore[]> {
 	try {
