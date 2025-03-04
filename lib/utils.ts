@@ -1,4 +1,4 @@
-import { MapEntity, MapEntityType } from '@/components/MapV2';
+import { MapEntity, MapEntityType } from '@/components/map/Map';
 import { GameCountry } from '@/contexts/GameContext';
 import { getContinents, loadContinentGeodata, loadCountryGeodata } from '@/ressources/countryUtils';
 import { Continent } from '@/ressources/types';

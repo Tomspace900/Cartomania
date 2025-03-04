@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import { promises as fs } from 'fs';
+import { FeatureCollection } from 'geojson';
 
 type RouteType = 'world' | 'country' | 'continent';
 type RouteConfig = {
@@ -61,7 +62,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		const filePath = path.join(process.cwd(), 'ressources', 'geodata', 'dataset', resolution, config.folder, fileName);
 
 		const fileContent = await fs.readFile(filePath, 'utf-8');
-		const geoJson: GeoJSON.FeatureCollection = JSON.parse(fileContent);
+		const geoJson: FeatureCollection = JSON.parse(fileContent);
 
 		if (geoJson.type !== 'FeatureCollection') {
 			return NextResponse.json({ error: 'Invalid GeoJSON format' }, { status: 500 });

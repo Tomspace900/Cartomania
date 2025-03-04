@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Continent } from '@/ressources/types';
 import { useRouter } from 'next/navigation';
-import MapLoader from '@/components/MapLoader';
+import MapLoader from '@/components/map/MapLoader';
 
 const isMobile = window.innerWidth < 640;
 
@@ -57,11 +57,12 @@ export default function Home() {
 						entities={continents}
 						mapProps={{
 							type: 'glob',
-							name: 'world',
-							animate: true,
-							enablePan: isMobile,
-							rotateTo: globCoordinates,
-							handleClick: handleGlobClick,
+							// name: 'world',
+							// animate: true,
+							// enablePan: isMobile,
+							// rotateTo: globCoordinates,
+							// handleClick: handleGlobClick,
+							onRegionClick: handleGlobClick,
 						}}
 					/>
 				</div>

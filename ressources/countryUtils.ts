@@ -1,6 +1,7 @@
 import { RegionCode } from '@prisma/client';
 import { Continent, Country, CountryCode } from './types';
 import continents from './continents';
+import { FeatureCollection } from 'geojson';
 
 export const getCountries = async () =>
 	fetch('/api/data/country').then((res) => {
@@ -35,7 +36,7 @@ export const loadCountryGeodata = async (
 	cca2: CountryCode | RegionCode,
 	detailed: boolean = false,
 	extended: boolean = false
-): Promise<GeoJSON.FeatureCollection> => {
+): Promise<FeatureCollection> => {
 	const resolution = detailed ? 'high' : 'low';
 
 	try {
@@ -45,7 +46,7 @@ export const loadCountryGeodata = async (
 			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
 		}
 
-		const geoData: GeoJSON.FeatureCollection = await response.json();
+		const geoData: FeatureCollection = await response.json();
 
 		return geoData;
 	} catch (error) {
@@ -54,7 +55,7 @@ export const loadCountryGeodata = async (
 	}
 };
 
-export const loadContinentGeodata = async (code: RegionCode, detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
+export const loadContinentGeodata = async (code: RegionCode, detailed: boolean = false): Promise<FeatureCollection> => {
 	const resolution = detailed ? 'high' : 'low';
 
 	if (!code) {
@@ -68,7 +69,7 @@ export const loadContinentGeodata = async (code: RegionCode, detailed: boolean =
 			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
 		}
 
-		const geoData: GeoJSON.FeatureCollection = await response.json();
+		const geoData: FeatureCollection = await response.json();
 
 		return geoData;
 	} catch (error) {
@@ -77,7 +78,7 @@ export const loadContinentGeodata = async (code: RegionCode, detailed: boolean =
 	}
 };
 
-export const loadWorldGeodata = async (detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
+export const loadWorldGeodata = async (detailed: boolean = false): Promise<FeatureCollection> => {
 	const resolution = detailed ? 'high' : 'low';
 
 	try {
@@ -87,7 +88,7 @@ export const loadWorldGeodata = async (detailed: boolean = false): Promise<GeoJS
 			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
 		}
 
-		const geoData: GeoJSON.FeatureCollection = await response.json();
+		const geoData: FeatureCollection = await response.json();
 
 		return geoData;
 	} catch (error) {
@@ -96,7 +97,7 @@ export const loadWorldGeodata = async (detailed: boolean = false): Promise<GeoJS
 	}
 };
 
-// export const loadAm5Geodata = async (path: string, detailed: boolean = false): Promise<GeoJSON.FeatureCollection> => {
+// export const loadAm5Geodata = async (path: string, detailed: boolean = false): Promise<FeatureCollection> => {
 // 	const res = detailed ? 'High' : 'Low';
 
 // 	try {
@@ -106,7 +107,7 @@ export const loadWorldGeodata = async (detailed: boolean = false): Promise<GeoJS
 // 			throw new Error(`Failed to fetch geodata: ${response.statusText}`);
 // 		}
 
-// 		const geoData: GeoJSON.FeatureCollection = await response.json();
+// 		const geoData: FeatureCollection = await response.json();
 
 // 		return geoData;
 // 	} catch (error) {

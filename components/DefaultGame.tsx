@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameCountry, useGameState } from '@/contexts/GameContext';
 import { GamePill } from './GamePill';
-import MapLoader from './MapLoader';
+import MapLoader from './map/MapLoader';
 
 const DefaultGame = () => {
 	const { gameCountries } = useGameState();
@@ -20,11 +20,7 @@ const DefaultGame = () => {
 					detailed
 					mapProps={{
 						type: 'map',
-						name: 'default',
-						center: { latitude: 45, longitude: 200 },
-						enablePan: true,
-						enableZoom: true,
-						handleClick: handleCountryClick,
+						onRegionClick: handleCountryClick,
 					}}
 				/>
 			</div>

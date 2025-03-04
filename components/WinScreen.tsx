@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ReactConfetti from 'react-confetti';
 import { Button } from './ui/button';
 import { gameModeMap, GameParams, useGameState } from '@/contexts/GameContext';
-import { isEmpty } from 'lodash';
 import { LoadingState } from '@/lib/types';
-import { getContinentByCode, loadContinentGeodata, loadWorldGeodata } from '@/ressources/countryUtils';
-import Map from './Map';
+import { getContinentByCode } from '@/ressources/countryUtils';
 import { getUserTopScores, TopScore } from '@/services/score';
 import TopScores from './TopScores';
 import { useUser } from '@/hooks/useUser';
@@ -28,17 +26,20 @@ const WinScreen = ({ gameParams }: IWinScreenProps) => {
 				getUserTopScores(user.id, gameModeMap[mode], regionCode, 5).then((scores) => setTopScores(scores));
 		};
 
-		const fetchGeoData = async () => {
-			const worldGeoData = await loadWorldGeodata();
-			const continentGeoData = regionCode ? await loadContinentGeodata(regionCode) : ({} as GeoJSON.FeatureCollection);
-			setGeoData([worldGeoData, continentGeoData]);
-		};
+		// const fetchGeoData = async () => {
+		// 	const worldGeoData = await loadWorldGeodata();
+		// 	const continentGeoData = regionCode ? await loadContinentGeodata(regionCode) : ({} as FeatureCollection);
+		// 	setGeoData([worldGeoData, continentGeoData]);
+		// };
 
 		const fetchData = async () => {
 			setLoading('loading');
 
 			try {
-				Promise.all([fetchTopScores(), fetchGeoData()]).then(() => setLoading('done'));
+				Promise.all([
+					fetchTopScores(),
+					// fetchGeoData()
+				]).then(() => setLoading('done'));
 			} catch (error) {
 				console.error(error);
 				setLoading('failed');
@@ -66,7 +67,7 @@ const WinScreen = ({ gameParams }: IWinScreenProps) => {
 				<TopScores topScores={topScores} currentScore={currentScore} />
 
 				<Button onClick={() => initGame(gameParams)}>Rejouer</Button>
-				<div className="max-w-full w-[400px] min-h-[300px] flex-grow">
+				{/* <div className="max-w-full w-[400px] min-h-[300px] flex-grow">
 					{loading === 'done' && !isEmpty(geoData) && (
 						<Map
 							type="glob"
@@ -76,7 +77,7 @@ const WinScreen = ({ gameParams }: IWinScreenProps) => {
 							highlightedPolygonId={regionCode}
 						/>
 					)}
-				</div>
+				</div> */}
 			</div>
 		</>
 	);

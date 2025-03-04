@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingState } from '@/lib/types';
-import MapV2, { IMapProps, MapEntity, MapEntityType } from './MapV2';
+import Map, { IMapProps, MapEntity, MapEntityType } from './Map';
 import _ from 'lodash';
 import { toMapEntity } from '@/lib/utils';
-import Loader from './Loader';
+import Loader from '../Loader';
+import { Continent, Country } from '@/ressources/types';
 
 interface MapContainerProps<T> {
 	entityType: MapEntityType;
@@ -12,7 +13,7 @@ interface MapContainerProps<T> {
 	detailed?: boolean;
 }
 
-const MapLoader = <T,>({ entityType, entities, mapProps, detailed }: MapContainerProps<T>) => {
+const MapLoader = <T extends Country | Continent>({ entityType, entities, mapProps, detailed }: MapContainerProps<T>) => {
 	const [loading, setLoading] = useState<LoadingState>('idle');
 	const [mapEntities, setMapEntities] = useState<MapEntity<T>[]>([]);
 
@@ -35,11 +36,7 @@ const MapLoader = <T,>({ entityType, entities, mapProps, detailed }: MapContaine
 
 	return (
 		<div className="w-full h-full">
-			{loading === 'done' && !_.isEmpty(mapEntities) ? (
-				<MapV2 {...mapProps} mapEntities={mapEntities} />
-			) : (
-				<Loader text="" />
-			)}
+			{loading === 'done' && !_.isEmpty(mapEntities) ? <Map {...mapProps} mapEntities={mapEntities} /> : <Loader text="" />}
 		</div>
 	);
 };
